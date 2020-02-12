@@ -1,14 +1,15 @@
-from . import main as app
-from .. import db, uploaded_images, mail
-from .forms import PostForm, ContactForm
-from ..models import Post, Tag, User
-from flask import render_template, redirect, flash, url_for, session, request
+# library imports
+from flask import render_template, redirect, flash, url_for, session, request, current_app, send_from_directory
 from flask_security import login_required, roles_required, current_user
 from flask_uploads import UploadNotAllowed
 from flask_mail import Message
 from slugify import slugify
+import os
 # our objects
-
+from . import main as app
+from .. import db, uploaded_images, mail
+from .forms import PostForm, ContactForm, SettingsForm
+from ..models import Post, Tag, User
 # Displays the home page.
 @app.route('/')
 @app.route('/index')
@@ -18,6 +19,37 @@ from slugify import slugify
 def index():
     posts = Post.query.order_by(Post.publish_date.desc())
     return render_template('main/index.html', posts=posts)
+
+@app.route('/settings', methods=('GET', 'POST'))
+@app.route('/settings/', methods=('GET', 'POST'))
+@app.route('/lucio-is-the-best-healer/', methods=('GET', 'POST')) # it's not ana, mr. a
+@app.route('/settings.html', methods=('GET', 'POST'))
+@login_required
+def settings():
+    form = SettingsForm(obj=current_user)
+    if form.validate_on_submit():
+        # how to flex with code
+        original_image = None if not current_user.image else current_user.image        
+        form.populate_obj(current_user)
+        current_user.image = original_image
+        if form.image.has_file() and form.image.data != original_image:
+            # TODO: delete old image if a new one is added
+            image = request.files.get('image')
+            try:
+                user_upload(current_user, image)
+                current_user.image = str(image.filename)
+            except Exception as e:
+                flash(f"The image was not uploaded: {e}", 'danger')
+        db.session.add(current_user)
+        db.session.commit()
+        flash("User updated", "Success!")
+    return render_template('main/settings.html', form=form)
+
+@app.route('/user<int:user_id>')
+@login_required
+def profile(user_id):
+    user = User.query.filter_by(id=user_id).first_or_404()
+    return render_template('main/profile.html', user=user)
 
 @app.route('/components')
 @app.route('/components/')
@@ -136,3 +168,20 @@ def delete_post(post_id):
     flash("Article deleted", 'success')
     return redirect(url_for('blog_index'))
 
+################
+#HELPER METHODS#
+################
+
+def user_upload(user, file):
+    """upload's a file to a user's folder"""
+    path = f"{current_app.config['UPLOADED_IMAGES_DEST']}/{ current_user.id }"
+    if not os.path.exists(path):
+        os.mkdir(path)
+    file.save(os.path.join(f"{current_app.config['UPLOADED_IMAGES_DEST']}/{ current_user.id }/", file.filename))
+    return url_for('main.uploaded_files', user_id=user.id, filename=file.filename)
+
+@app.route('/files/<int:user_id>/<path:filename>')
+def uploaded_files(user_id, filename):
+    """Function to serve up files"""
+    path = current_app.config['UPLOADED_IMAGES_DEST'] + f"\{user_id}"
+    return send_from_directory(path, filename)

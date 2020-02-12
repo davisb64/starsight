@@ -8,7 +8,7 @@ from flask_security import current_user, login_required, RoleMixin, Security, \
 from flask_uploads import configure_uploads
 from flaskext.markdown import Markdown
 
-from .extensions import db, uploaded_images, security, mail, migrate, admin, ckeditor
+from .extensions import db, uploaded_images, security, mail, migrate, moment, admin, ckeditor
 from .models import User, Role, Post, Tag
 from .models.main import UserAdmin, RoleAdmin, PostAdmin # not db tables
 from .main.forms import ExtendedRegisterForm
@@ -25,19 +25,24 @@ def page_forbidden(e):
 
 # sort of like an application factory
 def create_app(config_name):
-    app = Flask(__name__)
-    app.config.from_object('settings')
+    app = Flask(__name__) # lotsa things done here!!!!!!
+    app.config.from_object('settings') # load settings
     
-    # images
+    # image uploady flask DLC
     configure_uploads(app, uploaded_images)
     
-    db.init_app(app)
+    db.init_app(app) # database e x t e n d
     user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+    # load security extension
     security.init_app(app, user_datastore, confirm_register_form=ExtendedRegisterForm)
-    mail.init_app(app)
+    mail.init_app(app) # mail extension loady time
+    # load writing tool extension
     md = Markdown(app, extensions=['fenced_code', 'tables'])
-    # migrate.init_app(app, db)
+    migrate.init_app(app, db) # this one's important, load database update tool
+    moment.init_app(app)
     # Add Flask-Admin views for Users and Roles
+
+    # TODO: don't be lazy, get the try-except outta here
     try:
         admin.init_app(app)
         ckeditor.init_app(app)
@@ -50,10 +55,11 @@ def create_app(config_name):
 
     # sentry_sdk.init(dsn="", integrations=[FlaskIntegration()])
     
+    # activate flaskinni blueprint (site roadmap)
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    # error handlers
+    # custom error handlers, functions at the top
     app.register_error_handler(500, crash_page)
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, page_forbidden)
@@ -73,10 +79,9 @@ def create_app(config_name):
         # Create two Users for testing purposes -- unless they already exists.
         # In each case, use Flask-Security utility function to encrypt the password.
         encrypted_password = utils.encrypt_password(app.config['STARTING_ADMIN_PASS'])
-        if not user_datastore.get_user(app.config['STARTING_ADMIN1']):
-            user_datastore.create_user(email=app.config['STARTING_ADMIN1'], password=encrypted_password)
-        if not user_datastore.get_user(app.config['STARTING_ADMIN2']):
-            user_datastore.create_user(email=app.config['STARTING_ADMIN2'], password=encrypted_password)
+        for email in app.config['STARTING_ADMINS']:
+            if not user_datastore.get_user(email):
+                user_datastore.create_user(email=email, password=encrypted_password)
             
 
         # Commit any database changes; the User and Roles must exist before we can add a Role to the User
@@ -84,16 +89,18 @@ def create_app(config_name):
 
         # Give one User has the "end-user" role, while the other has the "admin" role. (This will have no effect if the
         # Users already have these Roles.) Again, commit any database changes.
-        user_datastore.add_role_to_user(app.config['STARTING_ADMIN1'], 'admin')
-        confirmed_admin = user_datastore.get_user(app.config['STARTING_ADMIN1'])
-        confirmed_admin.confirmed_at = datetime.utcnow()
-
-        user_datastore.add_role_to_user(app.config['STARTING_ADMIN2'], 'admin')
-        confirmed_admin = user_datastore.get_user(app.config['STARTING_ADMIN2'])
-        confirmed_admin.confirmed_at = datetime.utcnow()
+        for email in app.config['STARTING_ADMINS']:
+            user_datastore.add_role_to_user(email, 'admin')
+            confirmed_admin = user_datastore.get_user(email)
+            confirmed_admin.confirmed_at = datetime.utcnow()
 
         db.session.commit()
-
+    @app.before_request
+    def before_request():
+        if current_user.is_authenticated:
+            first_time = True if not current_user.last_seen else False
+            current_user.last_seen = datetime.utcnow()
+            db.session.commit()
     
     return app
 
