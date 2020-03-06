@@ -27,11 +27,18 @@ $green: #1cc88a !default;
 $teal: #20c9a6 !default;
 $cyan: #36b9cc !default;
 
-$primary:       $purple;
-$secondary:     $blue;
-$success:       $green;
-$info:          $cyan;
-$warning:       $yellow;
+$star-primary: #FFA630 !default;
+$star-secondary: #2C2C54 !default;
+$star-success: #9B0D0D !default;
+$star-info: #0D1421 !default;
+$star-warning: #BBB8B2 !default;
+
+
+$primary:       $star-primary;
+$secondary:     $star-secondary;
+$success:       $star-success;
+$info:          $star-info;
+$warning:       $star-warning;
 $danger:        $red;
 $light:         $gray-100;
 $dark:          $gray-800;
