@@ -18,13 +18,16 @@ from ..models import Post, Tag, User
 # Flask-Security will display a login form if the user isn't already authenticated.
 def index():
     flash("Welcome!", "success")
-    session['toggled'] = True
+    if not 'toggled' in session.keys():
+        session['toggled'] = True
     posts = Post.query.order_by(Post.publish_date.desc())
     return render_template('main/index.html', posts=posts)
 
 @app.route('/untoggle')
 def untoggle():
     session['toggled'] = False
+    dictionary = {'key_name':5, 'hamburger':'cheese'}
+    return redirect(url_for('main.index'))
 
 
 @app.route('/settings', methods=('GET', 'POST'))
