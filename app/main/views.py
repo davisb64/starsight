@@ -17,6 +17,8 @@ from ..models import Post, Tag, User
 # Users must be authenticated to view the home page, but they don't have to have any particular role.
 # Flask-Security will display a login form if the user isn't already authenticated.
 def index():
+    flash("Welcome!", "success")
+    session['toggled'] = True
     posts = Post.query.order_by(Post.publish_date.desc())
     return render_template('main/index.html', posts=posts)
 
