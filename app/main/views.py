@@ -22,6 +22,11 @@ def index():
     posts = Post.query.order_by(Post.publish_date.desc())
     return render_template('main/index.html', posts=posts)
 
+@app.route('/untoggle')
+def untoggle():
+    session['toggled'] = False
+
+
 @app.route('/settings', methods=('GET', 'POST'))
 @app.route('/settings/', methods=('GET', 'POST'))
 @app.route('/lucio-is-the-best-healer/', methods=('GET', 'POST')) # it's not ana, mr. a
