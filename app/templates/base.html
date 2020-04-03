@@ -1,51 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    {% block head_meta %}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    {% endblock %}
-    <title>{% block title %}Welcome{% endblock %} - Flaskinni</title>
-    <!-- Bootstrap Core CSS zz123-->
-    {% block head_css %}
-     <!-- Custom fonts for this template-->
-    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css' ) }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,900|Muli:300,400,400i,900&display=swap" rel="stylesheet"> 
-    
-    {% endblock %}
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+	{% block head_meta %}
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content=""> {% endblock %}
+	<title>{% block title %}Welcome{% endblock %} - Flaskinni</title>
+	<!-- Bootstrap Core CSS zz123-->
+	{% block head_css %}
+	<!-- Custom fonts for this template-->
+	<link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css' ) }}" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,900|Muli:300,400,400i,900&display=swap" rel="stylesheet">	{%
+	endblock %}
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    {% block head %}
-    {% endblock %}
-    {% block head_tail %}
-    <!-- Custom styles for this template-->
-    <link href="{{ url_for('static', filename='css/custom.min.css' ) }}" rel="stylesheet">    
-    {% endblock %}
-    
+	{% block head %} {% endblock %} {% block head_tail %}
+	<!-- Custom styles for this template-->
+	<link href="{{ url_for('static', filename='css/custom.min.css' ) }}" rel="stylesheet"> {% endblock %}
+
 
 </head>
 
 {% block body %}
-<body id="page-top" class="{% block body_classes %}{% endblock %}">
 
-  {% block wrapper %}
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+<body id="page-top" class="{% block body_classes %}{% endblock %} sidebar-toggled">
 
-    {% block sidebar %}
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+	{% block wrapper %}
+	<!-- Page Wrapper -->
+	<div id="wrapper">
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('main.index') }}">
-        <img id="logo-small" class="animated--grow-in" src="{{ url_for('static', filename='img/starsight_logo_SM_WHITE.png') }}" alt="Flaskinni logo"/>
+		{% block sidebar %}
+		<!-- Sidebar -->
+		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+
+			<!-- Sidebar - Brand -->
+			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('main.index') }}">
+				<img id="logo-small" class="animated--grow-in" src="{{ url_for('static', filename='img/starsight_logo_SM_WHITE.png') }}" alt="Flaskinni logo"/>
         <div class="sidebar-brand-text mx-3">
           <img id="logo-img" class="animated--fade-in" src="{{ url_for('static', filename='img/starsight_logo_MD_WHITE (1).png') }}" alt="Flaskinni logo"/>
         </div>
@@ -281,4 +278,4 @@
   <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
   </body>{% endblock %}
 
-</html>        
+</html>
