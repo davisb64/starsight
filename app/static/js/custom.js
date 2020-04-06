@@ -1,9 +1,9 @@
 
 $(document).ready(function() {
+
   $('.full-height').css('height', $(window).height());
   
   $('.content-wrapper').css('min-height', ($(window).height()-200));
-
 
   $('.delete').on('click', function(e) {
     e.preventDefault();
@@ -25,6 +25,24 @@ $(document).ready(function() {
       } else {
         console.log("not delete");
       }
+    });
+  });
+
+  $('#sidebarToggle').on('click', function(e) {
+    $.ajax({
+      data : {
+          something : "hello, I don't have any data to give you"
+      },
+      type : 'POST',
+      url : '/togglesidebar' // Notice I can't use a url_for
+    })
+    .done(function(data) {
+        if (data.error) {
+          // error?            
+        }else {
+          // cool, it worked
+        }
+        
     });
   });
 

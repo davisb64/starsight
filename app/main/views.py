@@ -25,14 +25,12 @@ def index():
 
 @app.route('/untoggle')
 def untoggle():
-    session['toggled'] = False
-    dictionary = {'key_name':5, 'hamburger':'cheese'}
+    session['toggled'] = False    
     return redirect(url_for('main.index'))
 
 
 @app.route('/settings', methods=('GET', 'POST'))
 @app.route('/settings/', methods=('GET', 'POST'))
-@app.route('/lucio-is-the-best-healer/', methods=('GET', 'POST')) # it's not ana, mr. a
 @app.route('/settings.html', methods=('GET', 'POST'))
 @login_required
 def settings():
