@@ -1,0 +1,70 @@
+from .. import db, uploaded_images
+from flask import flash
+from flask_admin.contrib import sqla
+from flask_security import UserMixin, RoleMixin, current_user, utils
+from datetime import datetime
+import humanize
+
+
+class Character(db.Model):
+    """ Stats tracker for a user's fictional character """
+    # KEYS
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    # PROPS
+    active = db.Column(db.Boolean, default=True)
+    created_on = db.Column(db.DateTime(), default=datetime.utcnow)
+    name = db.Column(db.String(80))
+    link = db.Column(db.String(200))
+    description = db.Column(db.Text)
+    hp = db.Column(db.Integer) # do I even need this?
+    str = db.Column(db.Integer)
+    int = db.Column(db.Integer)
+    con = db.Column(db.Integer)
+    dex = db.Column(db.Integer)
+    cha = db.Column(db.Integer)
+    # RELATIONSHIPS user backref
+    memberships = db.relationship('Membership', back_populates='character')
+    logs = db.relationship('Log', back_populates='character')
+
+
+
+
+class Campaign(db.Model):
+    """ The adventure that a series of characters join """
+    id = db.Column(db.Integer, primary_key=True)
+    # PROPS
+    active = db.Column(db.Boolean, default=True) # has it been archived / deleted
+    live = db.Column(db.Boolean, default=True) # is the campaign still ongoing?
+    created_on = db.Column(db.DateTime(), default=datetime.utcnow)
+    published_on = db.Column(db.DateTime(), default=None)
+    title = db.Column(db.String(80))
+    subtitle = db.Column(db.String(80))
+    slug = db.Column(db.String(40))
+    description = db.Column(db.Text)
+    image = db.Column(db.String(80))
+    # RELATIONSHIPS
+    memberships = db.relationship('Membership', back_populates='campaign')
+    logs = db.relationship('Log', back_populates='campaign')
+
+
+
+
+class Membership(db.Model):
+    """ Qualified association object between campaign and character """
+    id = db.Column(db.Integer, primary_key=True)
+    character_id = 
+    campaign_id = 
+    # RELATIONSHIPS
+    character = db.relationship('Character', back_populates='memberships')
+    campaign = db.relationship('Campaign', back_populates='memberships')
+
+
+
+class Log(db.Model):
+    """ A character's journal entry for that day's campaign session """
+    id = db.Column(db.Integer, primary_key=True)
+
+    # RELATIONSHIPS
+    character = db.relationship('Character', back_populates='logs')
+    campaign = db.relationship('Campaign', back_populates='logs')

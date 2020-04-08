@@ -6,6 +6,8 @@ from wtforms import validators, StringField, PasswordField
 from datetime import datetime
 import humanize
 
+# LOCAL IMPORTS
+from . import Character
 
 # Create a table to support a many-to-many relationship between Users and Roles
 roles_users = db.Table(
@@ -52,6 +54,8 @@ class User(db.Model, UserMixin):
     # DATES
     confirmed_at = db.Column(db.DateTime())
     last_seen = db.Column(db.DateTime(), default=None)
+    # REFERENCES
+    characters = db.relationship('Character', backref='user')
     posts = db.relationship('Post', backref='user', lazy='dynamic')
     
     roles = db.relationship(
