@@ -53,11 +53,16 @@ class Campaign(db.Model):
 class Membership(db.Model):
     """ Qualified association object between campaign and character """
     id = db.Column(db.Integer, primary_key=True)
-    character_id = 
-    campaign_id = 
+    character_id = db.Column(db.Integer, db.ForeignKey('character.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id'), nullable=True)
+    isDM = db.Column(db.Boolean, default=False)
+    created_on = db.Column(db.DateTime(), default=none)
+    active = db.Column(db.Boolean(), default=True)
     # RELATIONSHIPS
     character = db.relationship('Character', back_populates='memberships')
     campaign = db.relationship('Campaign', back_populates='memberships')
+    logs = db.relationship('Logs', back_populates='memberships')
 
 
 

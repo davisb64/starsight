@@ -57,7 +57,8 @@ class User(db.Model, UserMixin):
     # REFERENCES
     characters = db.relationship('Character', backref='user')
     posts = db.relationship('Post', backref='user', lazy='dynamic')
-    
+    memberships = db.relationship('Membership', backref='user')
+
     roles = db.relationship(
         'Role',
         secondary=roles_users,
