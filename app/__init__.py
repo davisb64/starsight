@@ -9,7 +9,7 @@ from flask_uploads import configure_uploads
 from flaskext.markdown import Markdown
 
 from .extensions import db, uploaded_images, security, mail, migrate, moment, admin, ckeditor
-from .models import User, Role, Post, Tag
+from .models import User, Role, Post, Tag, Character, Campaign, Log, Membership
 from .models.main import UserAdmin, RoleAdmin, PostAdmin # not db tables
 from .main.forms import ExtendedRegisterForm
 

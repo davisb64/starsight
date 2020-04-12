@@ -28,8 +28,6 @@ class Character(db.Model):
     logs = db.relationship('Log', back_populates='character')
 
 
-
-
 class Campaign(db.Model):
     """ The adventure that a series of characters join """
     id = db.Column(db.Integer, primary_key=True)
@@ -42,12 +40,11 @@ class Campaign(db.Model):
     subtitle = db.Column(db.String(80))
     slug = db.Column(db.String(40))
     description = db.Column(db.Text)
+    session_count = db.Column(db.Integer, default=0)
     image = db.Column(db.String(80))
     # RELATIONSHIPS
     memberships = db.relationship('Membership', back_populates='campaign')
     logs = db.relationship('Log', back_populates='campaign')
-
-
 
 
 class Membership(db.Model):
@@ -56,20 +53,40 @@ class Membership(db.Model):
     character_id = db.Column(db.Integer, db.ForeignKey('character.id'), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id'), nullable=True)
-    isDM = db.Column(db.Boolean, default=False)
-    created_on = db.Column(db.DateTime(), default=none)
+    # TOGGLES
+    isDM = db.Column(db.Boolean, default=False)    
     active = db.Column(db.Boolean(), default=True)
-    # RELATIONSHIPS
+    # TIME
+    created_on = db.Column(db.DateTime(), default=datetime.utcnow)
+    # RELATIONSHIPS (backref: user)
     character = db.relationship('Character', back_populates='memberships')
     campaign = db.relationship('Campaign', back_populates='memberships')
-    logs = db.relationship('Logs', back_populates='memberships')
-
+    logs = db.relationship('Log', back_populates='membership')
 
 
 class Log(db.Model):
     """ A character's journal entry for that day's campaign session """
     id = db.Column(db.Integer, primary_key=True)
-
+    character_id = db.Column(db.Integer, db.ForeignKey('character.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id'), nullable=True)
+    membership_id = db.Column(db.Integer, db.ForeignKey('membership.id'), nullable=True)
+    # TOGGLES
+    public = db.Column(db.Boolean, default=False)    
+    active = db.Column(db.Boolean(), default=True)
+    # TIME
+    created_on = db.Column(db.DateTime(), default=datetime.utcnow)
+    sesssion_on = db.Column(db.DateTime(), default=datetime.utcnow)
+    published_on = db.Column(db.DateTime(), default=datetime.utcnow)
+    sesssion_on = db.Column(db.DateTime(), default=datetime.utcnow)    
+    # PROPS
+    title = db.Column(db.String(80))
+    subtitle = db.Column(db.String(80))
+    body = db.Column(db.Text)
+    image = db.Column(db.String(80))
+    group = db.Column(db.Integer)
+    sesssion = db.Column(db.DateTime(), default=datetime.utcnow) 
     # RELATIONSHIPS
     character = db.relationship('Character', back_populates='logs')
     campaign = db.relationship('Campaign', back_populates='logs')
+    membership = db.relationship('Membership', back_populates='logs')
