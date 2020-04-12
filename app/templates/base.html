@@ -6,8 +6,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content=""> {% endblock %}
+	<meta name="description" content="A Online DND notes keeper, allow you and your friend to play Online.">
+	<meta name="author" content="Dan Adiletta, Brian Davis, Nathan Flaherty, Yunqi Li, Kyle Lai"> {% endblock %}
 	<title>{% block title %}Welcome{% endblock %} - Flaskinni</title>
 	<!-- Bootstrap Core CSS zz123-->
 	{% block head_css %}
@@ -24,7 +24,9 @@
 	{% block head %} {% endblock %} {% block head_tail %}
 	<!-- Custom styles for this template-->
 	<link href="{{ url_for('static', filename='css/custom.min.css' ) }}" rel="stylesheet"> {% endblock %}
-
+  <link rel="icon"
+        type="image/png" 
+        href="{{ url_for('static', filename='img/starsight_logo_SM_WHITE.png' ) }}"/>
 
 </head>
 
@@ -235,7 +237,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>Copyright &copy; Starsight 2019</span>
           </div>
         </div>
       </footer>
