@@ -23,7 +23,7 @@ def page_forbidden(e):
     return render_template('main/403.html'), 403
 
 
-# sort of like an application factory
+# EXACTLY an application factory
 def create_app(config_name):
     app = Flask(__name__) # lotsa things done here!!!!!!
     app.config.from_object('settings') # load settings
@@ -49,6 +49,10 @@ def create_app(config_name):
         admin.add_view(UserAdmin(User, db.session))
         admin.add_view(RoleAdmin(Role, db.session))
         admin.add_view(PostAdmin(Post, db.session))
+        admin.add_view(PostAdmin(Character, db.session))
+        admin.add_view(PostAdmin(Campaign, db.session))
+        admin.add_view(PostAdmin(Membership, db.session))
+        admin.add_view(PostAdmin(Log, db.session))
     except Exception as e:
         pass
         # TODO: log error

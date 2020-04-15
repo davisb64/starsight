@@ -9,7 +9,7 @@ import os
 from . import main as app
 from .. import db, uploaded_images, mail
 from .forms import PostForm, ContactForm, SettingsForm
-from ..models import Post, Tag, User
+from ..models import Post, Tag, User, Character, Campaign, Log, Membership
 # Displays the home page.
 @app.route('/')
 @app.route('/index')
@@ -69,6 +69,10 @@ def components():
 @roles_required('admin')
 def superadmin():
     data = {}
+    data['campaigns'] = Campaign.query.all()
+    data['characters'] = Character.query.all()
+    data['memberships'] = Membership.query.all()
+    data['logs'] = Log.query.all()
     data['users'] = User.query.all()
     return render_template('main/superadmin.html', data=data)
   
