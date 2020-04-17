@@ -9,8 +9,8 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">
-      {% if current_user.image %} 
-        <img src="{{ current_user.imgsrc }}" style="width:15%;height:width;border:1px solid gray" class="img-profile rounded-circle"/>
+      {% if user.image %} 
+        <img src="{{ user.imgsrc }}" style="width:15%;height:width;border:1px solid gray" class="img-profile rounded-circle"/>
       {% endif %}
       {{ user }}'s Profile
     </h1>
@@ -25,8 +25,8 @@
   <div class="row">
     <div class="col-3">
       {# PROFILE PICTURE #}
-      {% if current_user.image %} 
-        <img src="{{ current_user.imgsrc }}" style="width:100%;height:width;border:1px solid gray" class="img-profile rounded-circle"/>
+      {% if user.image %} 
+        <img src="{{ user.imgsrc }}" style="width:100%;height:width;border:1px solid gray" class="img-profile rounded-circle"/>
       {% endif %}
     </div>
     <div class="col-md-6">
@@ -35,14 +35,14 @@
       <div class="card" style="border:1px,solid,lightslategray">
 				{# HEADER #}
 				<a href="#contactCard" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="contactCard">
-					<h6 class="m-0 font-weight-bold text-primary">Contact {{ current_user.name }}</h6>
+					<h6 class="m-0 font-weight-bold text-primary">Contact {{ user.name }}</h6>
 				</a>
 			  {# CONTENT #}
 				<div class="collapse show" id="contactCard">
 					<div class="card-body">
-            <strong>Phone Number: </strong>{{ current_user.phone }}<br>
+            <strong>Phone Number: </strong>{{ user.phone }}<br>
             
-            <strong>Email: </strong>{{ current_user.email }}
+            <strong>Email: </strong>{{ user.email }}
 					</div>
 				</div>
 			</div>
@@ -50,16 +50,16 @@
 			<div class="card mt-3" style="border:1px,solid,lightslategray">
 				{# HEADER #}
 				<a href="#aboutCard" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="aboutCard">
-					<h6 class="m-0 font-weight-bold text-primary">About {{ current_user.name }}</h6>
+					<h6 class="m-0 font-weight-bold text-primary">About {{ user.name }}</h6>
 				</a>
 			  {# CONTENT #}
 				<div class="collapse show" id="aboutCard">
 					<div class="card-body">
-						{{ current_user.about }}
+						{{ user.about }}
 					</div>
 				</div>
       </div>
-      {% if user == current_user %}
+      {% if user == user %}
       
       {% endif %}
     </div>
