@@ -169,7 +169,7 @@
 										Action
 									</button>
 									<div class="dropdown-menu" aria-labelledby="{{ campaign.id }}-campaign-action">
-										<a href="{{ url_for('', campaign_id=campaign.id) }}" class="dropdown-item"><i class="fas fa-dungeon fa-sm"></i> View Campaign</a>
+										<a href="" class="dropdown-item"><i class="fas fa-dungeon fa-sm"></i> View Campaign</a>
 										<a href="{{ url_for('campaign.edit_view', id=campaign.id, url=url_for('main.superadmin')) }}" class="dropdown-item"><i class="fas fa-pencil-alt fa-sm"></i> Edit Campaign</a>
 										<a href=""  class="dropdown-item delete"><i class="fas fa-trash fa-sm"></i> Delete Campaign</a>
 									</div>
