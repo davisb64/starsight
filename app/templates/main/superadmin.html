@@ -242,44 +242,52 @@
 	{#   --------------------  #}
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">User Tables</h6>
+			<h6 class="m-0 font-weight-bold text-primary">Log Tables</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" id="dataTableLog" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Registered</th>
-							<th>Actions</th>
+							<th>Title</th>
+							<th>Subtitle</th>
+							<th>Body</th>
+							<th>Group</th>
+							<th>Created</th>
+							<th>Session date</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Registered</th>
-							<th>Actions</th>
+							<th>Title</th>
+							<th>Subtitle</th>
+							<th>Body</th>
+							<th>Group</th>
+							<th>Created</th>
+							<th>Session date</th>
+							<th>Action</th>
 						</tr>
 					</tfoot>
 					<tbody>
-						{% for user in data['users'] %}
+						{% for log in data['logs'] %}
 						<tr>
-							<td>{{ user.first_name }}</td>
-							<td>{{ user.last_name }}</td>
-							<td>{{ user.email }}</td>
-							<td>{{ user.when_registered }}</td>
+							<td>{{ log.title }}</td>
+							<td>{{ log.subtitle }}</td>
+							<td>{{ log.body[:100] }}</td>
+							<td>{{ log.group }}</td>
+							<td>{{ log.created_on }}</td>
+							<td>{{ log.session_date }}</td>
 							<td>
 								<div class="dropdown no-arrow mb-4">
 									<button class="btn btn-secondary dropdown-toggle" type="button" id="{{ user.id }}-user-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Action
 									</button>
 									<div class="dropdown-menu" aria-labelledby="{{ user.id }}-user-action">
-										<a href="{{ url_for('user.edit_view', id=user.id, url=url_for('main.superadmin')) }}" class="dropdown-item"><i class="icon-pencil"></i> Edit User</a>
-										<a href=""  class="dropdown-item delete"><i class="icon-trash"></i> Delete User</a>
+										<a href="" class="dropdown-item"><i class="fas fa-user fa-sm"></i> View Log</a>
+														<a href="{{ url_for('main.profile', user_id=character.user_id) }}" class="dropdown-item"><i class="fas fa-user fa-sm"></i> View User</a>
+										<a href="{{ url_for('log.edit_view', id=log.id, url=url_for('main.superadmin')) }}" class="dropdown-item"><i class="fas fa-pencil-alt fa-sm"></i> Edit Log</a>
+										<a href=""  class="dropdown-item delete"><i class="fas fa-trash fa-sm"></i> Delete Log</a>
 									</div>
 								</div>
 							</td>
