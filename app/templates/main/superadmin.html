@@ -71,44 +71,52 @@
 	{#   --------------------  #}
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">User Tables</h6>
+			<h6 class="m-0 font-weight-bold text-primary">Character Tables</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" id="dataTableChar" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Registered</th>
+							<th>Name</th>
+							<th>Hp</th>
+							<th>Str</th>
+							<th>Int</th>
+							<th>Wis</th>
+							<th>Cons</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Registered</th>
+							<th>Name</th>
+							<th>Hp</th>
+							<th>Str</th>
+							<th>Int</th>
+							<th>Wis</th>
+							<th>Cons</th>
 							<th>Actions</th>
 						</tr>
 					</tfoot>
 					<tbody>
-						{% for user in data['users'] %}
+						{% for character in data['characters'] %}
 						<tr>
-							<td>{{ user.first_name }}</td>
-							<td>{{ user.last_name }}</td>
-							<td>{{ user.email }}</td>
-							<td>{{ user.when_registered }}</td>
+							<td>{{ character.name }}</td>
+							<td>{{ character.hp }}</td>
+							<td>{{ character.str }}</td>
+							<td>{{ character.int }}</td>
+							<td>{{ character.wis }}</td>
+							<td>{{ character.cons }}</td>
 							<td>
 								<div class="dropdown no-arrow mb-4">
 									<button class="btn btn-secondary dropdown-toggle" type="button" id="{{ user.id }}-user-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Action
 									</button>
 									<div class="dropdown-menu" aria-labelledby="{{ user.id }}-user-action">
-										<a href="{{ url_for('user.edit_view', id=user.id, url=url_for('main.superadmin')) }}" class="dropdown-item"><i class="icon-pencil"></i> Edit User</a>
-										<a href=""  class="dropdown-item delete"><i class="icon-trash"></i> Delete User</a>
+										<a href="" class="dropdown-item"><i class="fas fa-user fa-sm"></i> View Character</a>
+														<a href="{{ url_for('main.profile', user_id=character.user_id) }}" class="dropdown-item"><i class="fas fa-user fa-sm"></i> View User</a>
+										<a href="{{ url_for('character.edit_view', id=character.id, url=url_for('main.superadmin')) }}" class="dropdown-item"><i class="fas fa-pencil-alt fa-sm"></i> Edit Character</a>
+										<a href=""  class="dropdown-item delete"><i class="fas fa-trash fa-sm"></i> Delete Character</a>
 									</div>
 								</div>
 							</td>
