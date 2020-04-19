@@ -26,7 +26,7 @@
 	<link href="{{ url_for('static', filename='css/custom.min.css' ) }}" rel="stylesheet"> {% endblock %}
   <link rel="icon"
         type="image/png" 
-        href="{{ url_for('static', filename='img/starsight_logo_SM_WHITE.png' ) }}"/>
+        href="{{ url_for('static', filename='img/starsight_Favicon' ) }}"/>
 
 </head>
 
@@ -76,8 +76,9 @@
       </li>      
       
       <!-- Nav Item - Pages Collapse Menu -->
+      {% if current_user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages" >
           <i class="fas fa-fw fa-folder"></i>
           <span>Blog</span>
         </a>
@@ -92,8 +93,7 @@
             <a class="collapse-item" href="#">Blank Page</a>
           </div>
         </div>
-      </li>      
-      
+      </li>  
       <!-- Divider -->
       <hr class="sidebar-divider">
       
@@ -114,10 +114,11 @@
           <i class="fas fa-fw fa-wrench"></i>
           <span>Blank Page</span></a>
       </li>
-
+      
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
+      {% endif %}
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
