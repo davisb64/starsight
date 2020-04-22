@@ -81,7 +81,8 @@ def create_app(config_name):
 
         # Create the Roles "admin" and "end-user" -- unless they already exist
         user_datastore.find_or_create_role(name='admin', description='Administrator')
-        user_datastore.find_or_create_role(name='end-user', description='End user')
+        user_datastore.find_or_create_role(name='end-user', description='End user') # I think we're not using this?
+        user_datastore.find_or_create_role(name='premium', description='Paid user')
 
         # Create two Users for testing purposes -- unless they already exists.
         # In each case, use Flask-Security utility function to encrypt the password.
