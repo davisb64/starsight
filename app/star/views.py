@@ -8,15 +8,17 @@ import os
 # our objects
 from . import star as app
 from .. import db, uploaded_images, mail
-from ..models import Post, Tag, User
+from ..models import Post, Tag, User, Character, Log, Membership, Campaign
 
-# LOG ROUTES
 
-@app.route('/log')
-@app.route('/log/')
-def log_index():
-    logs = Log.query.filter_by(active=True).order_by(Log.publish_date.desc())
-    return render_template('star/log.html', logs=logs)
+###########################
+###### LOG ROUTES
+###########################
+@app.route('/log/<int:log_id>')
+@login_required
+def view_log(log_id):
+    log = Log.query.filter_by(active=True, id=log_id).first_or_404()
+    return render_template('star/log.html', log=log)
 
 @app.route('/log/new', methods=('GET', 'POST'))
 @login_required
@@ -48,7 +50,7 @@ def new_log():
         log = Log(current_user, title, subtitle, body, group, image=filename)
         db.session.add(log)
         db.session.commit()
-        return redirect(url_for('read', slug=slug))
+        return redirect(url_for('star.view_read', slug=slug))
     return render_template('star/log.html', form=form, action="new")
     
 @app.route('/log/edit/<int:log_id>', methods=('GET', 'POST'))
@@ -90,8 +92,10 @@ def delete_log(log_id):
     flash("Log deleted", 'success')
     return redirect(url_for('log_index'))
 
-# CHARACTER ROUTES
 
+###########################
+###### CHARACTER ROUTES
+###########################
 @app.route('/character')
 @app.route('/character/')
 def character_index():
@@ -174,8 +178,10 @@ def delete_character(character_id):
     flash("Character deleted", 'success')
     return redirect(url_for('character_index'))
 
-# CAMPAIGN ROUTES
 
+###########################
+# CAMPAIGN ROUTES
+###########################
 @app.route('/campaign')
 @app.route('/campaign/')
 def campaign_index():
@@ -208,7 +214,6 @@ def new_campaign():
         subtitle = form.subtitle.data
         description = form.description.data
         slug = slugify(title)
-        session_count = 0
         campaign = Campaign(current_user, title, subtitle, description, slug, session_count, image=filename)
         db.session.add(campaign)
         db.session.commit()
