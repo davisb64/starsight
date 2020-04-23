@@ -15,8 +15,8 @@ from ..models import Post, Tag, User
 @app.route('/log')
 @app.route('/log/')
 def log_index():
-    posts = Post.query.filter_by(live=True).order_by(Post.publish_date.desc())
-    return render_template('star/log.html', posts=posts)
+    logs = Log.query.filter_by(active=True).order_by(Log.publish_date.desc())
+    return render_template('star/log.html', logs=logs)
 
 @app.route('/log/new', methods=('GET', 'POST'))
 @login_required
@@ -43,12 +43,13 @@ def new_log():
         title = form.title.data
         subtitle = form.subtitle.data
         body = form.body.data
-        slug = slugify(title)
-        log = Log(current_user, title, subtitle, body, slug, image=filename)
-        db.session.add(post)
+        group = form.group.data
+        # slug = slugify(title)
+        log = Log(current_user, title, subtitle, body, group, image=filename)
+        db.session.add(log)
         db.session.commit()
         return redirect(url_for('read', slug=slug))
-    return render_template('main/log.html', form=form, action="new")
+    return render_template('star/log.html', form=form, action="new")
     
 @app.route('/log/edit/<int:log_id>', methods=('GET', 'POST'))
 @roles_required('end_user')
@@ -78,13 +79,13 @@ def edit_log(log_id):
         '''
         db.session.commit()
         return redirect(url_for('read', slug=log.slug))
-    return render_template('main/post.html', form=form, log=log, action="edit")
+    return render_template('main/log.html', form=form, log=log, action="edit")
 
-@app.route('/log/delete/<int:post_id>')
+@app.route('/log/delete/<int:log_id>')
 @roles_required('end_user')
 def delete_log(log_id):
     log = Log.query.filter_by(id=log_id).first_or_404()
-    log.live = False
+    log.active = False
     db.session.commit()
     flash("Log deleted", 'success')
     return redirect(url_for('log_index'))
@@ -94,7 +95,7 @@ def delete_log(log_id):
 @app.route('/character')
 @app.route('/character/')
 def character_index():
-    characters = Character.query.filter_by(live=True).order_by(Character.publish_date.desc())
+    characters = Character.query.filter_by(active=True).order_by(Character.publish_date.desc())
     return render_template('star/character.html', characters=characters)
 
 @app.route('/character/new', methods=('GET', 'POST'))
@@ -119,11 +120,16 @@ def new_character():
         else:
             tag = form.tag.data
         '''
-        title = form.title.data
-        subtitle = form.subtitle.data
-        body = form.body.data
-        slug = slugify(title)
-        character = Character(current_user, title, subtitle, body, slug, image=filename)
+        name = form.name.data
+        description = form.description.data
+        link = form.link.data
+        hp = form.hp.data
+        stre = form.str.data
+        inte = form.int.data
+        wis = form.wis.data
+        cons = form.cons.data
+        # slug = slugify(title)
+        character = Character(current_user, name, description, link, hp, stre, inte, wis, cons, image=filename)
         db.session.add(character)
         db.session.commit()
         return redirect(url_for('read', slug=slug))
@@ -156,25 +162,25 @@ def edit_character(character_id):
             post.tag = new_tag
         '''
         db.session.commit()
-        return redirect(url_for('read', slug=post.slug))
-    return render_template('main/post.html', form=form, character=character, action="edit")
+        return redirect(url_for('read', slug=character.slug))
+    return render_template('main/character.html', form=form, character=character, action="edit")
 
 @app.route('/character/delete/<int:character_id>')
 @roles_required('end_user')
 def delete_character(character_id):
     character = Character.query.filter_by(id=character_id).first_or_404()
-    character.live = False
+    character.active = False
     db.session.commit()
     flash("Character deleted", 'success')
-    return redirect(url_for('blog_index'))
+    return redirect(url_for('character_index'))
 
 # CAMPAIGN ROUTES
 
 @app.route('/campaign')
 @app.route('/campaign/')
 def campaign_index():
-    posts = Post.query.filter_by(live=True).order_by(Post.publish_date.desc())
-    return render_template('main/blog.html', posts=posts)
+    campaigns = Campaign.query.filter_by(active=True).order_by(Campaign.publish_date.desc())
+    return render_template('main/campaign.html', campaigns=campaigns)
 
 @app.route('/campaign/new', methods=('GET', 'POST'))
 @login_required
@@ -200,23 +206,24 @@ def new_campaign():
         '''
         title = form.title.data
         subtitle = form.subtitle.data
-        body = form.body.data
+        description = form.description.data
         slug = slugify(title)
-        post = Post(current_user, title, subtitle, body, slug, image=filename)
-        db.session.add(post)
+        session_count = 0
+        campaign = Campaign(current_user, title, subtitle, description, slug, session_count, image=filename)
+        db.session.add(campaign)
         db.session.commit()
         return redirect(url_for('read', slug=slug))
-    return render_template('main/post.html', form=form, action="new")
+    return render_template('main/campaign.html', form=form, action="new")
     
-@app.route('/blog/edit/<int:post_id>', methods=('GET', 'POST'))
+@app.route('/campaign/edit/<int:campaign_id>', methods=('GET', 'POST'))
 @roles_required('admin')
-def edit_post(post_id):
-    post = Post.query.filter_by(id=post_id).first_or_404()
-    form = PostForm(obj=post)
+def edit_campaign(campaign_id):
+    campaign = Campaign.query.filter_by(id=campaign_id).first_or_404()
+    form = CampaignForm(obj=campaign)
     filename = None
     if form.validate_on_submit():
-        original_image = post.image
-        form.populate_obj(post)
+        original_image = campaign.image
+        form.populate_obj(campaign)
         if form.image.has_file():
             image = request.files.get('image')
             try:
@@ -224,9 +231,9 @@ def edit_post(post_id):
             except:
                 flash("The image was not uploaded")
             if filename:
-                post.image = filename
+                campaign.image = filename
         else:
-            post.image = original_image
+            campaign.image = original_image
         '''
         if form.new_tag.data:
             new_tag = Tag(form.new_tag.data)
@@ -235,15 +242,15 @@ def edit_post(post_id):
             post.tag = new_tag
         '''
         db.session.commit()
-        return redirect(url_for('read', slug=post.slug))
-    return render_template('main/post.html', form=form, post=post, action="edit")
+        return redirect(url_for('read', slug=campaign.slug))
+    return render_template('main/campaign.html', form=form, campaign=campaign, action="edit")
 
-@app.route('/blog/delete/<int:post_id>')
+@app.route('/campaign/delete/<int:campaign_id>')
 @roles_required('admin')
-def delete_post(post_id):
-    post = Post.query.filter_by(id=post_id).first_or_404()
-    post.live = False
+def delete_campaign(campaign_id):
+    campaign = Campaign.query.filter_by(id=campaign_id).first_or_404()
+    campaign.live = False
     db.session.commit()
     flash("Article deleted", 'success')
-    return redirect(url_for('blog_index'))
+    return redirect(url_for('campaign_index'))
 
