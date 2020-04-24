@@ -21,6 +21,11 @@ class Character(db.Model):
     memberships = db.relationship('Membership', back_populates='character')
     logs = db.relationship('Log', back_populates='character')
 
+    def __init__(*args):
+        if args.get('name', False):
+          self.name = args['name']  
+        if args.get('link', False):
+          self.link = args['link']
 
 class Campaign(db.Model):
     """ The adventure that a series of characters join """
