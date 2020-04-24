@@ -96,11 +96,10 @@ def delete_log(log_id):
 ###########################
 ###### CHARACTER ROUTES
 ###########################
-@app.route('/character')
-@app.route('/character/')
-def character_index():
-    characters = Character.query.filter_by(active=True).order_by(Character.publish_date.desc())
-    return render_template('star/character.html', characters=characters)
+@app.route('/character/<int:character_id>')
+def view_character(character_id):
+    character = Character.query.filter_by(active=True, id=character_id).first_or_404()
+    return render_template('star/character.html', character=character)
 
 @app.route('/character/new', methods=('GET', 'POST'))
 @login_required
@@ -182,11 +181,10 @@ def delete_character(character_id):
 ###########################
 # CAMPAIGN ROUTES
 ###########################
-@app.route('/campaign')
-@app.route('/campaign/')
-def campaign_index():
-    campaigns = Campaign.query.filter_by(active=True).order_by(Campaign.publish_date.desc())
-    return render_template('main/campaign.html', campaigns=campaigns)
+@app.route('/campaign/<int:campaign_id>')
+def view_campaign(campaign_id):
+    campaign = Campaign.query.filter_by(active=True, id=campaign_id).first_or_404()
+    return render_template('star/campaign.html', campaign=campaign)
 
 @app.route('/campaign/new', methods=('GET', 'POST'))
 @login_required
