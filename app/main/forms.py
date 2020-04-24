@@ -75,3 +75,13 @@ class CampaignForm(FlaskForm):
     description = TextAreaField('About Campaign',[validators.Optional()])
     # TODO: add file size validator
     image = FileField('Image', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
+
+
+class LogForm(FlaskForm):
+    """ Modify a log's details and options """
+    title = StringField('Log Title', [validators.Required()])
+    subtitle = StringField('Log Subtitle', [validators.Optional()])
+    body = TextAreaField('Log Body',[validators.Optional()])
+    group = IntegerField('Log Group Number',[validators.Optional()])
+    # TODO: add file size validator
+    image = FileField('Log Image', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
