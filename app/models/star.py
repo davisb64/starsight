@@ -17,12 +17,6 @@ class Character(db.Model):
     name = db.Column(db.String(80))
     link = db.Column(db.String(200))
     description = db.Column(db.Text)
-    hp = db.Column(db.Integer) # do I even need this?
-    str = db.Column(db.Integer)
-    int = db.Column(db.Integer)
-    con = db.Column(db.Integer)
-    dex = db.Column(db.Integer)
-    cha = db.Column(db.Integer)
     # RELATIONSHIPS user backref
     memberships = db.relationship('Membership', back_populates='character')
     logs = db.relationship('Log', back_populates='character')
@@ -84,6 +78,7 @@ class Log(db.Model):
     subtitle = db.Column(db.String(80))
     body = db.Column(db.Text)
     image = db.Column(db.String(80))
+    link = db.Column(db.String(200))
     group = db.Column(db.Integer)
     sesssion = db.Column(db.DateTime(), default=datetime.utcnow) 
     # RELATIONSHIPS
