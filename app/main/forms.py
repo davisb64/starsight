@@ -56,6 +56,7 @@ class ContactForm(FlaskForm):
     message = TextAreaField('Your message:', [validators.DataRequired()])
     submit = SubmitField('Send Message')
 
+
 class SettingsForm(FlaskForm):
     """ Modify a user's details and options """
     first_name = StringField('First Name', [validators.Required()])
@@ -63,5 +64,14 @@ class SettingsForm(FlaskForm):
     about = TextAreaField('About me',[validators.Optional()])
     address = TextAreaField('Address',[validators.Optional()])
     phone = TelField('Phone number',[validators.Optional()])
+    # TODO: add file size validator
+    image = FileField('Image', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
+
+
+class CampaignForm(FlaskForm):
+    """ Modify a campaign's details and options """
+    title = StringField('Campaign Title', [validators.Required()])
+    subtitle = StringField('Campaign Subtitle', [validators.Optional()])
+    description = TextAreaField('About Campaign',[validators.Optional()])
     # TODO: add file size validator
     image = FileField('Image', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
