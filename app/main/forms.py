@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields.html5 import EmailField, TelField
-from wtforms import validators, StringField, PasswordField, TextAreaField, SubmitField
+from wtforms import validators, StringField, PasswordField, TextAreaField, SubmitField, IntegerField
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from flask_ckeditor import CKEditorField
@@ -81,6 +81,7 @@ class LogForm(FlaskForm):
     """ Modify a log's details and options """
     title = StringField('Log Title', [validators.Required()])
     subtitle = StringField('Log Subtitle', [validators.Optional()])
+    character_sheet = StringField('Link to character sheet', [validators.Optional()])
     body = TextAreaField('Log Body',[validators.Optional()])
     group = IntegerField('Log Group Number',[validators.Optional()])
     # TODO: add file size validator
