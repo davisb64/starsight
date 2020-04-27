@@ -165,7 +165,7 @@
                 {% if current_user.is_authenticated and current_user.image %}
                 <img class="img-profile rounded-circle" src="{{current_user.imgsrc}}"/>
                 {%else%}
-                <img class="img-profile rounded-circle" src="{{ url_for('static', filename='img/not_authenticated.jpg' ) }}"/>
+                <img class="img-profile rounded-circle" src="{{ url_for('static', filename='img/default_profile.jpg' ) }}"/>
                 {%endif%}
               </a>
               <!-- Dropdown - User Information -->
