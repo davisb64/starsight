@@ -11,6 +11,7 @@ from .. import db, uploaded_images, mail
 from ..models import Post, Tag, User, Character, Log, Membership, Campaign
 
 
+
 ###########################
 ###### LOG ROUTES
 ###########################
@@ -257,3 +258,12 @@ def delete_campaign(campaign_id):
     flash("Article deleted", 'success')
     return redirect(url_for('campaign_index'))
 
+
+###########################
+###### OTHER ROUTES
+###########################
+@app.route('/dashboard')
+@app.route('/dashboard/')
+@login_required
+def dashboard():
+    return render_template('star/dashboard.html')
