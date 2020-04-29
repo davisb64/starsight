@@ -263,10 +263,10 @@
   {% endblock %}
   <script>
     $('#{% block linkitem %}replaceme{% endblock %}').addClass('active');
-  </script>
-  {% block tail %}{% endblock %}
+  </script>  
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+  {% block tail %}{% endblock %}
   </body>{% endblock %}
 
 </html>
