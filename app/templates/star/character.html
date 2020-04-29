@@ -8,11 +8,30 @@
 <div class="container-fluid">
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Blank Page</h1>
+    <h1 class="h3 mb-0 text-gray-800">{{character.name}}</h1>
+    <h6>Played by: {{character.user}} </h6>
   </div>
 
   <!-- Content Row -->
   <div class="row">
+    <div class="col-6">
+      {{character.description}}
+    </div>
+    <div class="col-6">
+      <div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">View DnDBeyond Sheet</h6>
+				</div>
+				<div class="card-body">
+					<a href="#" class="btn btn-primary btn-icon-split btn-lg">
+						<span class="icon text-white-50">
+							<i class="fas fa-flag"></i>
+						</span>
+						<span class="text">View DnDBeyond Sheet</span>
+					</a>
+				</div>
+			</div>
+    </div>
 	</div>
 </div>
 
