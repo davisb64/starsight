@@ -1,0 +1,29 @@
+{#---------------------------------------------------------#}
+{#------------------  CHARACTER CARD  ---------------------#}
+{% macro character_card(character, membership=None) %}
+        
+
+{% endmacro %}
+
+
+{#---------------------------------------------------------#}
+{#-------------------  CAMPAIGN CARD  ---------------------#}
+{% macro campaign_card(campaign, membership=None) %}
+    <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+        <h5 class="card-title">{{ campaign.title }}</h5>
+        <p class="card-text">{{ campaign.description[:300] }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+        {% for m in campaign.memberships %}
+            <li class="list-group-item">{{ m.character }}-<span class="text-muted">{{ m.user }}</span></li>
+        {% endfor %}
+        </ul>
+        <div class="card-body">
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>        
+
+{% endmacro %}
