@@ -48,3 +48,14 @@ $(document).ready(function() {
 
 });
 
+function randombg(){
+  var random= Math.floor(Math.random() * 6) + 0;
+  var bigSize = ["url('{{ url_for('static', filename='img/dnd/bg/HDQ_1920x1080v2.jpg') }}')",
+                "url('{{ url_for('static', filename='img/dnd/bg/ElementalEvil_1920x1080_Fire_Wallpaper.jpg') }}')",
+                "url('{{ url_for('static', filename='img/dnd/bg/MadMage_Expansion_1920x1080_WallpaperTemplate.jpg') }}')",
+                "url('{{ url_for('static', filename='img/dnd/bg/PHB_1920x1080v2.jpg') }}')",
+                "url('{{ url_for('static', filename='img/dnd/bg/TheGodborn_1920x1080.jpg') }}')",
+                "url('{{ url_for('static', filename='img/dnd/bg/Tiamat_1920x1080.jpg') }}')"];
+  document.getElementById("hero").style.backgroundImage=bigSize[random];
+}  
+

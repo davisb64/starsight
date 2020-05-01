@@ -10,11 +10,16 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
   <!-- Page Heading -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <center>
-      <h1 class="h3 mb-0 text-grey-800">Starsight is a Tabletop RPG archiving tool built to help keep track of the session to session happenings. With the use of both private and public logs, it'll be easy to keep track of events and character changes if you're a DM or a player.</h1>
-    </center>
-  </div>
+  {% include "shared/header.html" %}
+  
+  {% include "shared/feature_cards.html" %}
+
+  {% include "shared/testimonials.html" %}
+
+  {% include "shared/cta_vignette.html" %}
+
+  {% include "shared/pricing.html" %}
+
 </div>
 
 {% endblock %} 
