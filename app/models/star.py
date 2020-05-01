@@ -20,12 +20,21 @@ class Character(db.Model):
     # RELATIONSHIPS user backref
     memberships = db.relationship('Membership', back_populates='character')
     logs = db.relationship('Log', back_populates='character')
+    image = db.Column(db.String(80))
 
     def __init__(*args):
         if args.get('name', False):
           self.name = args['name']  
         if args.get('link', False):
           self.link = args['link']
+    
+    # get the whole image path
+    @property
+    def imgsrc(self):
+        if self.image:
+            return uploaded_images.url(f"characters/{self.id}/{self.image}")
+        else:
+            return None
 
 class Campaign(db.Model):
     """ The adventure that a series of characters join """
