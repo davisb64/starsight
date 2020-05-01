@@ -20,6 +20,7 @@ class Character(db.Model):
     # RELATIONSHIPS user backref
     memberships = db.relationship('Membership', back_populates='character')
     logs = db.relationship('Log', back_populates='character')
+    image = db.Column(db.String(80))
 
     def __init__(*args):
         if args.get('name', False):
