@@ -27,6 +27,14 @@ class Character(db.Model):
           self.name = args['name']  
         if args.get('link', False):
           self.link = args['link']
+    
+    # get the whole image path
+    @property
+    def imgsrc(self):
+        if self.image:
+            return uploaded_images.url(f"characters/{self.id}/{self.image}")
+        else:
+            return None
 
 class Campaign(db.Model):
     """ The adventure that a series of characters join """
