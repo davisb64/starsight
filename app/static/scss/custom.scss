@@ -14,17 +14,6 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Muli', sans-serif;
 }
 
-#hero {
-	margin-top: -70px;
-	margin-bottom:50px;
-	justify-content: center; 
-}
-
-
-#hero img {
-	width: 50%;
-}
-
 /**********************************/
 /************  LOGO  **************/
 /**********************************/
@@ -42,6 +31,10 @@ h1, h2, h3, h4, h5, h6 {
 	width: 38%;
 }
 
+/**********************************/
+/****  FLASK SECURITY PAGES  ******/
+/**********************************/
+
 .userpage-logo {
     min-height: 50px;
     margin-top: 50px;
@@ -55,13 +48,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg-register-image {
-	background-image: url("/static/img/SCL_Keyar.jpg");
+	background-image: url("/static/img/dnd/bg/SCL_Keyar.jpg");
 }
 
+
+/**********************************/
+/**********  HERO  ****************/
+/**********************************/
 .bg-hero-image {
 	background-image: url("/static/img/HDQ_1920x1080v2.jpg");
 }
 
 #herocta {
 	max-width: 200px;
+}
+
+#hero {
+	margin-top: -70px;
+	margin-bottom:50px;
+	justify-content: center; 
+}
+
+
+#hero img {
+	width: 50%;
 }

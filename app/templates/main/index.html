@@ -2,15 +2,9 @@
 
 {% block linkitem %}homepage-link{% endblock %}
 {% block title %}Welcome{% endblock %} 
-
 {% block content %}
 
-<div id="hero" class="full-height bg-gradient-secondary d-flex align-items-center">
-  <div class="d-flex flex-column align-items-center">
-    <img src="{{ url_for('static', filename='img/starsight_logo_LG_WHITE.png') }}"/>
-    <a id="herocta" class="btn btn-primary" href="/register" role="button">Register</a>
-  </div>
-</div>
+  {% include "shared/hero.html" %}
 
 
 <!-- Begin Page Content -->
