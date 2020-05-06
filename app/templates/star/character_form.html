@@ -8,29 +8,26 @@
 <div class="container-fluid">
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Editing {{character.name}}{% if !current_user.name %}New Character{% endif %}</h1>
+    <h1 class="h3 mb-0 text-gray-800">Editing {% if character %} {{character.name}} {% endif %}</h1>
   </div>
 
   <!-- Content Row -->
   <div class="row">
-    <form action="{{url_for('main.character_form')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{url_for('star.character_form')}}" method="POST" enctype="multipart/form-data">
       {{form.hidden_tag()}}
       <div class="row">
         <div class="col-6">
-          {{ render_field_with_errors(form.first_name, class="form-control", placeholder="First Name") }}
-          {{ render_field_with_errors(form.last_name, class="form-control", placeholder="Last Name") }}
-          {{ render_field_with_errors(form.phone, class="form-control", placeholder="Phone Number") }}
-          {{ render_field_with_errors(form.address, class="form-control", placeholder="Address", rows=5) }}
+          {{ render_field_with_errors(form.name, class="form-control", placeholder="Character Name") }}
+          {{ render_field_with_errors(form.description, class="form-control", placeholder="Last Name") }}
+          {{ render_field_with_errors(form.character_sheet, class="form-control", placeholder="Character Sheet Link") }}
         </div>
         <div class="col-6">
-          {% if current_user.image %} 
-            <img src="{{ current_user.imgsrc }}" style="width:300px;height:300px;border:1px solid lightslategray" class="img-profile rounded-circle"/>
+          {% if character and character.image %} 
+            <img src="{{ character.imgsrc }}" style="width:300px;height:300px;border:1px solid lightslategray" class="img-profile rounded-circle"/>
           {% endif %}
-          
           {{ render_field_with_errors(form.image)}}
         </div>
         <div class="col-12">
-          {{ render_field_with_errors(form.about, class="form-control", placeholder="About Me") }}
           <button type="SUBMIT" class="btn btn-primary btn-lg w-100">Update Settings</button>
         </div>
       </div>
