@@ -9,6 +9,7 @@ import os
 from . import star as app
 from .. import db, uploaded_images, mail
 from ..models import Post, Tag, User, Character, Log, Membership, Campaign
+from ..main.forms import LogForm, CharacterForm, CampaignForm
 
 
 

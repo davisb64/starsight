@@ -87,6 +87,7 @@ class LogForm(FlaskForm):
     # TODO: add file size validator
     image = FileField('Log Image', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
 
+
 class CharacterForm(FlaskForm):
     """ Modify a log's details and options """
     name = StringField('Character Name', [validators.Required()])
