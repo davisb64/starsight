@@ -104,7 +104,7 @@ def view_character(character_id):
 
 @app.route('/character/new', methods=('GET', 'POST'))
 @login_required
-@roles_required('end_user')
+# @roles_required('end_user')
 def new_character():
     form = CharacterForm()
     if form.validate_on_submit():
@@ -140,7 +140,7 @@ def new_character():
     return render_template('main/character.html', form=form, action="new")
     
 @app.route('/character/edit/<int:character_id>', methods=('GET', 'POST'))
-@roles_required('end_user')
+# @roles_required('end_user')
 def edit_character(character_id):
     character = Character.query.filter_by(id=character_id).first_or_404()
     form = CharacterForm(obj=character)
