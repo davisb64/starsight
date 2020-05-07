@@ -22,3 +22,11 @@ class Membership(db.Model):
     # RELATIONSHIPS (backref: user, campaign)
     character = db.relationship('Character', back_populates='memberships')
     logs = db.relationship('Log', back_populates='membership')
+
+    def get_most_recent_log(self):
+        """ Returns the most recently written log """
+        return None
+
+    def can_deactivate(self, membership):
+        """ Checks if the given membership has the authority to 'delete' this membership """
+        return None

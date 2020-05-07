@@ -6,8 +6,6 @@ import humanize
 
 # local imports
 from .. import db, uploaded_images
-from .character import Log
-from .membership import Membership
 
 class Campaign(db.Model):
     """ The adventure that a series of characters join """
@@ -26,3 +24,20 @@ class Campaign(db.Model):
     # RELATIONSHIPS
     memberships = db.relationship('Membership', backref='campaign')
     logs = db.relationship('Log', back_populates='campaign')
+
+    @property
+    def img(self):
+        """ Builds the path to the image stored in the static assets """
+        return None
+
+    def can_create_new_session(self, membership):
+        """ Checks if the given membership is able to generate new blank log entries for all active characters """
+        return None
+
+    def get_logs_from_session(self, date):
+        """ Returns all characters' logs that match the given date """
+        return None
+
+    def get_list_of_sessions(self):
+        """ Returns an array of dates showing each session meeting of the campagin """
+        return None
