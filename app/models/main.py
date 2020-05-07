@@ -7,7 +7,9 @@ from datetime import datetime
 import humanize
 
 # LOCAL IMPORTS
-from .star import Character, Membership, Log
+from .character import Character, Log
+from .campaign import Campaign
+from .membership import Membership
 
 # Create a table to support a many-to-many relationship between Users and Roles
 roles_users = db.Table(
