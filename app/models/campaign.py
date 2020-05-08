@@ -36,7 +36,11 @@ class Campaign(db.Model):
 
     def get_logs_from_session(self, date):
         """ Returns all characters' logs that match the given date """
-        return None
+        logs = []
+        for log in self.logs:
+            if log.session_on == date:
+                logs.append(log)
+        return logs
 
     def get_list_of_sessions(self):
         """ Returns an array of dates showing each session meeting of the campagin """
