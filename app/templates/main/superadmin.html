@@ -188,43 +188,43 @@
 	{#   --------------------  #}
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">User Tables</h6>
+			<h6 class="m-0 font-weight-bold text-primary">Membership</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" id="dataTableMemb" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Registered</th>
+							<th>Campaign</th>
+							<th>User</th>
+							<th>Character</th>
+							<th>Created on</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Registered</th>
+							<th>Campaign</th>
+							<th>User</th>
+							<th>Character</th>
+							<th>Created on</th>
 							<th>Actions</th>
 						</tr>
 					</tfoot>
 					<tbody>
-						{% for user in data['users'] %}
+						{% for m in data['memberships'] %}
 						<tr>
-							<td>{{ user.first_name }}</td>
-							<td>{{ user.last_name }}</td>
-							<td>{{ user.email }}</td>
-							<td>{{ user.when_registered }}</td>
+							<td>{{ m.campaign }}</td>
+							<td>{{ m.user }} {% if m.isDM %}- DM{% endif %}</td>
+							<td>{{ m.character }}</td>
+							<td>{{ m.created_on }}</td>
 							<td>
 								<div class="dropdown no-arrow mb-4">
-									<button class="btn btn-secondary dropdown-toggle" type="button" id="{{ user.id }}-user-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="{{ m.user.id }}-user-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Action
 									</button>
-									<div class="dropdown-menu" aria-labelledby="{{ user.id }}-user-action">
-										<a href="{{ url_for('user.edit_view', id=user.id, url=url_for('main.superadmin')) }}" class="dropdown-item"><i class="icon-pencil"></i> Edit User</a>
+									<div class="dropdown-menu" aria-labelledby="{{ m.user.id }}-user-action">
+										<a href="{{ url_for('user.edit_view', id=m.user.id, url=url_for('main.superadmin')) }}" class="dropdown-item"><i class="icon-pencil"></i> Edit User</a>
 										<a href=""  class="dropdown-item delete"><i class="icon-trash"></i> Delete User</a>
 									</div>
 								</div>

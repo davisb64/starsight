@@ -31,6 +31,8 @@
     </div>
     <div class="col-md-6">
       {# USER TEXT DATA #}
+      {% from "star/_cards.html" import campaign_card %}
+      {{ campaign_card(campaign)}}
       {# PHONE NUMBER#}
       <div class="card" style="border:1px,solid,lightslategray">
 				{# HEADER #}

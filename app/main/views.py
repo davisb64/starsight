@@ -56,8 +56,9 @@ def settings():
 @app.route('/user<int:user_id>')
 @login_required
 def profile(user_id):
+    campaign= Campaign.query.first()
     user = User.query.filter_by(id=user_id).first_or_404()
-    return render_template('main/profile.html', user=user)
+    return render_template('main/profile.html', user=user, campaign=campaign)
 
 @app.route('/components')
 @app.route('/components/')
