@@ -91,10 +91,14 @@ h1, h2, h3, h4, h5, h6 {
 #cta_vignette{
 	background-color: $star-primary;
 	text-align: center;
-	margin-top: 100px;
+	margin-top: 50px;
 	margin-bottom: 50px;
+	margin-left: -60px;
+	margin-right: -60px;
 	h3{
 		text-align: center;
+		margin-top: 50px;
+		color: white;
 	}
 	.alert{
 		margin-top: 50px;
