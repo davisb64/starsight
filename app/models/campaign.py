@@ -40,4 +40,8 @@ class Campaign(db.Model):
 
     def get_list_of_sessions(self):
         """ Returns an array of dates showing each session meeting of the campagin """
-        return None
+        results = [] 
+        for log in self.logs:
+            if log.session_on not in results:
+                results.append(log.session_on)
+        return results

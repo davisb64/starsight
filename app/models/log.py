@@ -18,8 +18,8 @@ class Log(db.Model):
     # TIME
     created_on = db.Column(db.DateTime(), default=datetime.utcnow)
     sesssion_on = db.Column(db.DateTime(), default=datetime.utcnow)
-    published_on = db.Column(db.DateTime(), default=datetime.utcnow)
-    sesssion_on = db.Column(db.DateTime(), default=datetime.utcnow)    
+    sesssion = db.Column(db.DateTime(), default=datetime.utcnow) # NIU
+    published_on = db.Column(db.DateTime(), default=datetime.utcnow)    
     # PROPS
     title = db.Column(db.String(80))
     subtitle = db.Column(db.String(80))
@@ -27,7 +27,7 @@ class Log(db.Model):
     image = db.Column(db.String(80))
     link = db.Column(db.String(200))
     group = db.Column(db.Integer)
-    sesssion = db.Column(db.DateTime(), default=datetime.utcnow) 
+    
     # RELATIONSHIPS
     character = db.relationship('Character', back_populates='logs')
     campaign = db.relationship('Campaign', back_populates='logs')
