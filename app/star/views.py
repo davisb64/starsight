@@ -125,19 +125,16 @@ def new_character():
         else:
             tag = form.tag.data
         '''
-        name = form.name.data
-        description = form.description.data
-        link = form.link.data
-        hp = form.hp.data
-        stre = form.str.data
-        inte = form.int.data
-        wis = form.wis.data
-        cons = form.cons.data
+       
         # slug = slugify(title)
-        character = Character(current_user, name, description, link, hp, stre, inte, wis, cons, image=filename)
+        character = Character()# #current_user, name, description, link, image=filename)
+        form.populate_obj(character)
+        character.user_id = current_user.id
+        character.image = filename
         db.session.add(character)
         db.session.commit()
-        return redirect(url_for('read', slug=slug))
+        flash("Character created!", "success")
+        return redirect(url_for('star.view_character', character_id=character.id))
     return render_template('star/character_form.html', form=form, action="new")
     
 @app.route('/character/edit/<int:character_id>', methods=('GET', 'POST'))
