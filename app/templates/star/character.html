@@ -9,13 +9,28 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">{{character.name}}</h1>
-    <h6>Played by: {{character.user}} </h6>
   </div>
 
   <!-- Content Row -->
   <div class="row">
+    <div class="col-6"></div>
     <div class="col-6">
-      {{character.description}}
+      {% if character.image %} 
+        <img src="{{ character.imgsrc }}" style="width:100%;height:width;border:1px solid gray" class="img-profile rounded-circle"/>
+      {% endif %}
+    </div>
+    <div class="col-6">
+      <div class="col-6">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">About {{character.name}}</h6>
+          </div>
+          <div class="card-body">
+            <h6>Played by: {{character.user}}</h6><br>
+            {{character.description}}
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-6">
       <div class="card shadow mb-4">
@@ -25,7 +40,7 @@
 				<div class="card-body">
 					<a href="#" class="btn btn-primary btn-icon-split btn-lg">
 						<span class="icon text-white-50">
-							<i class="fas fa-flag"></i>
+							<i class="fas fa-link"></i>
 						</span>
 						<span class="text">View DnDBeyond Sheet</span>
 					</a>

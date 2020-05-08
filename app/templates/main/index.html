@@ -2,25 +2,24 @@
 
 {% block linkitem %}homepage-link{% endblock %}
 {% block title %}Welcome{% endblock %} 
-
 {% block content %}
 
-<div id="hero" class="full-height bg-gradient-secondary d-flex align-items-center">
-  <div class="d-flex flex-column">
-    <img src="{{ url_for('static', filename='img/starsight_logo_LG_WHITE.png') }}"/>
-    <a id="herocta" class="btn btn-primary" href="/register" role="button">Register</a>
-  </div>
-</div>
+  {% include "shared/hero.html" %}
 
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
   <!-- Page Heading -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <center>
-      <h1 class="h3 mb-0 text-grey-800">Starsight is a Tabletop RPG archiving tool built to help keep track of the session to session happenings. With the use of both private and public logs, it'll be easy to keep track of events and character changes if you're a DM or a player.</h1>
-    </center>
-  </div>
+  {% include "shared/header.html" %}
+  
+  {% include "shared/feature_cards.html" %}
+
+  {% include "shared/testimonials.html" %}
+
+  {% include "shared/cta_vignette.html" %}
+
+  {% include "shared/pricing.html" %}
+
 </div>
 
 {% endblock %} 
