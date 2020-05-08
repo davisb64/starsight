@@ -2,7 +2,7 @@
 
 {% block linkitem %}dashboard-link{% endblock %}
 {% block title %}Dashboard{% endblock %} 
-
+{% from "star/_cards.html" import campaign_card, character_card %}
 {% block content %}
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -14,6 +14,9 @@
   <!-- Content Row -->
   <div class="row">
     {# LOOP AND DISPLAY CAMPAIGNS #}
+      {% for membership in current_user.memberships %} 
+        {{ campaign_card(membership.campaign, membership=membership) }}
+      {% endfor %}
     {# ADD NEW CHARACTER CARD #}
     {# LOOP AND DISPLAY CHARACTERS #}
     {# ADD NEW CHARACTER CARD #}

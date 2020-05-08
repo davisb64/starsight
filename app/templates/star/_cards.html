@@ -21,8 +21,8 @@
         {% endfor %}
         </ul>
         <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+        <a href="{{ url_for('star.view_campaign', campaign_id=campaign.id) }}" class="card-link">View</a>
+        <a href="{{ url_for('star.edit_campaign', campaign_id=campaign.id) }}" class="card-link">Edit</a>
         </div>
     </div>        
 

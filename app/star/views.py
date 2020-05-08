@@ -267,4 +267,7 @@ def delete_campaign(campaign_id):
 @app.route('/dashboard/')
 @login_required
 def dashboard():
-    return render_template('star/dashboard.html')
+    data = {}
+    
+
+    return render_template('star/dashboard.html', data=data)
