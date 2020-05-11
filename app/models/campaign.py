@@ -34,12 +34,17 @@ class Campaign(db.Model):
         """ Checks if the given membership is able to generate new blank log entries for all active characters """
         return membership and membership.campaign_id == self.id and membership.active and membership.isDM
 
-    def get_logs_from_session(self, date):
+    def get_logs_from_session(self, date, membership=None):
         """ Returns all logs that match the given date """
         logs = []
-        for log in self.logs:
-            if log.session_on == date:
-                logs.append(log)
+        if not membership:
+            for log in self.logs:
+                if log.session_on == date:
+                    logs.append(log)
+        else: 
+            for log in self.logs:
+                if log.session_on == date and log.membership_id == membership.id:
+                    logs.append(log)
         return logs
 
     def get_list_of_sessions(self):
