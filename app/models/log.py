@@ -44,7 +44,7 @@ class Log(db.Model):
             return self.active and self.public and self.published_on != None
         log = self.campaign.get_logs_from_session(self.sesssion_on, membership=membership)
         if log:
-            return log.group = self.group
+            return log.group == self.group
         return True
 
     def can_edit(self, membership):
