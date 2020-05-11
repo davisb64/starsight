@@ -15,7 +15,7 @@
 
   <!-- Content Row -->
   <div class="row">
-    <form action="{{url_for('star.new_character')}}" method="POST" enctype="multipart/form-data">
+    <form action="{% if character %}{{ url_for('star.edit_character', character_id=character.id) }}{% else %}{{ url_for('star.new_character') }}{% endif %}" method="POST" enctype="multipart/form-data">
       {{form.hidden_tag()}}
       <div class="row">
         <div class="col-6">

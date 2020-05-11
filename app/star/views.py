@@ -164,7 +164,7 @@ def edit_character(character_id):
             post.tag = new_tag
         '''
         db.session.commit()
-        return redirect(url_for('read', slug=character.slug))
+        return redirect(url_for('star.view_character', character_id=character.id))
     return render_template('star/character_form.html', form=form, character=character, action="edit")
 
 @app.route('/character/delete/<int:character_id>')
