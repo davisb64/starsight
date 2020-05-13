@@ -32,7 +32,7 @@ class Campaign(db.Model):
 
     def can_create_new_session(self, membership):
         """ Checks if the given membership is able to generate new blank log entries for all active characters """
-        return membership and membership.campaign_id == self.id and membership.active and membership.isDM
+        return membership and membership.campaign_id == self.id and membership.active and membership.isDM and self.active
 
     def get_logs_from_session(self, date, membership=None):
         """ Returns all logs that match the given date """
