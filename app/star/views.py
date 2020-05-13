@@ -211,13 +211,14 @@ def new_campaign():
         else:
             tag = form.tag.data
         '''
-        title = form.title.data
-        subtitle = form.subtitle.data
-        description = form.description.data
-        slug = slugify(title)
-        campaign = Campaign(current_user, title, subtitle, description, slug, session_count, image=filename)
+        
+        campaign = Campaign() # current_user, title, subtitle, description, slug, session_count, image=filename)
+        form.populate_obj(campaign)
+        campaign.user_id = current_user.id
+        campaign.image = filename
         db.session.add(campaign)
         db.session.commit()
+        flash("Campaign successfully created", "success")
         return redirect(url_for('star.view_campaign', campaign_id=campaign.id))
     return render_template('star/campaign_form.html', form=form, action="new")
     
