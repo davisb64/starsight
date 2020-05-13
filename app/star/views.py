@@ -187,7 +187,7 @@ def view_campaign(campaign_id):
 
 @app.route('/campaign/new', methods=('GET', 'POST'))
 @login_required
-@roles_required('end_user')
+# @roles_required('end_user')
 def new_campaign():
     form = CampaignForm()
     if form.validate_on_submit():
@@ -214,11 +214,11 @@ def new_campaign():
         campaign = Campaign(current_user, title, subtitle, description, slug, session_count, image=filename)
         db.session.add(campaign)
         db.session.commit()
-        return redirect(url_for('read', slug=slug))
+        return redirect(url_for('star.view_campaign', campaign_id=campaign.id))
     return render_template('star/campaign_form.html', form=form, action="new")
     
 @app.route('/campaign/edit/<int:campaign_id>', methods=('GET', 'POST'))
-@roles_required('admin')
+# @roles_required('admin')
 def edit_campaign(campaign_id):
     campaign = Campaign.query.filter_by(id=campaign_id).first_or_404()
     form = CampaignForm(obj=campaign)
@@ -244,7 +244,7 @@ def edit_campaign(campaign_id):
             post.tag = new_tag
         '''
         db.session.commit()
-        return redirect(url_for('read', slug=campaign.slug))
+        return redirect(url_for('star.view_campaign', campaign_id=campaign.id))
     return render_template('star/campaign_form.html', form=form, campaign=campaign, action="edit")
 
 @app.route('/campaign/delete/<int:campaign_id>')

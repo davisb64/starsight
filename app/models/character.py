@@ -35,3 +35,6 @@ class Character(db.Model):
         """ Searches all log entries to find the earliest posted date """
         return None
 
+    def can_edit(self, user):
+        """ Test if the user is allowed to edit the character """
+        return None
