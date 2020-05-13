@@ -37,4 +37,5 @@ class Character(db.Model):
 
     def can_edit(self, user):
         """ Test if the user is allowed to edit the character """
-        return None
+        
+        return self.user_id == user.id
