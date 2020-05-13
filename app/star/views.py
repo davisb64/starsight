@@ -139,8 +139,12 @@ def new_character():
     
 @app.route('/character/edit/<int:character_id>', methods=('GET', 'POST'))
 # @roles_required('end_user')
+@login_required
 def edit_character(character_id):
     character = Character.query.filter_by(id=character_id).first_or_404()
+    if not character.can_edit(current_user):
+        flash("Cannot edit character >:(", "danger")
+        return redirect(url_for('main.index'))
     form = CharacterForm(obj=character)
     filename = None
     if form.validate_on_submit():
