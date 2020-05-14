@@ -17,6 +17,12 @@
       {% for membership in current_user.memberships %} 
         {{ campaign_card(membership.campaign, membership=membership) }}
       {% endfor %}
+      <div class="card" style="width: 18rem;">
+        <img src=" {{ url_for('static', filename='img/dnd/square/ROD_Bruenor.jpg') }} " class="card-img-top" alt="...">
+        <div class="card-body">
+          <a class="btn btn-primary btn-lg w-100" href="{{ url_for('star.new_campaign') }}">Start a campaign</a>
+        </div>
+      </div>        
     {# ADD NEW CHARACTER CARD #}
     {# LOOP AND DISPLAY CHARACTERS #}
     {# ADD NEW CHARACTER CARD #}
