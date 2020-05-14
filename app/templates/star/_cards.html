@@ -1,7 +1,22 @@
 {#---------------------------------------------------------#}
 {#------------------  CHARACTER CARD  ---------------------#}
 {% macro character_card(character, membership=None) %}
-        
+<div class="card" style="width: 18rem;">
+    <img src="{{ character.img }}" class="card-img-top" alt="{{ character }} image">
+    <div class="card-body">
+    <h5 class="card-title">{{ character }}</h5>
+    <p class="card-text">{{ character.description[:300] }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+    {% for m in character.memberships %}
+        <li class="list-group-item">{{ m.campaign }}-<span class="text-muted">{{ m.user }}</span></li>
+    {% endfor %}
+    </ul>
+    <div class="card-body">
+    <a href="{{ url_for('star.view_character', character_id=character.id) }}" class="card-link">View</a>
+    <a href="{{ url_for('star.edit_character', character_id=character.id) }}" class="card-link">Edit</a>
+    </div>
+</div>            
 
 {% endmacro %}
 
@@ -10,7 +25,7 @@
 {#-------------------  CAMPAIGN CARD  ---------------------#}
 {% macro campaign_card(campaign, membership=None) %}
     <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
+        <img src="{{ campaign.img }}" class="card-img-top" alt="{{ campaign }} image">
         <div class="card-body">
         <h5 class="card-title">{{ campaign.title }}</h5>
         <p class="card-text">{{ campaign.description[:300] }}</p>
@@ -23,6 +38,28 @@
         <div class="card-body">
         <a href="{{ url_for('star.view_campaign', campaign_id=campaign.id) }}" class="card-link">View</a>
         <a href="{{ url_for('star.edit_campaign', campaign_id=campaign.id) }}" class="card-link">Edit</a>
+        </div>
+    </div>        
+
+{% endmacro %}
+
+{#---------------------------------------------------------#}
+{#-------------------  LOG CARD  ---------------------#}
+{% macro log_card(log, membership=None) %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{ log.img }}" class="card-img-top" alt="{{ log }} image">
+        <div class="card-body">
+        <h5 class="card-title">{{ log.title }}</h5>
+        <p class="card-text">{{ log.description[:300] }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+        {% for m in log.memberships %}
+            <li class="list-group-item">{{ m.character }}-<span class="text-muted">{{ m.user }}</span></li>
+        {% endfor %}
+        </ul>
+        <div class="card-body">
+        <a href="{{ url_for('star.view_log', log_id=log.id) }}" class="card-link">View</a>
+        <a href="{{ url_for('star.edit_log', log_id=log.id) }}" class="card-link">Edit</a>
         </div>
     </div>        
 
