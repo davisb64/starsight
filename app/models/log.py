@@ -40,8 +40,17 @@ class Log(db.Model):
 
     def can_view(self, membership):
         """ returns True if a player is allowed to view a log entry."""
-        return None
+        if not membership or membership.campaign_id != self.campaign_id:
+            return self.active and self.public and self.published_on != None
+        log = self.campaign.get_logs_from_session(self.sesssion_on, membership=membership)
+        if log:
+            return log.group == self.group
+        return True
 
     def can_edit(self, membership):
         """ Checks if the given membership has access to edit this log """
-        return None
+        if not membership or membership.campaign_id != self.campaign_id:
+            return False
+        # Will we ever allowed an editor to review log?
+        return membership.isDM or membership.user_id==self.user_id
+

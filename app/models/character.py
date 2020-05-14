@@ -21,12 +21,7 @@ class Character(db.Model):
     memberships = db.relationship('Membership', back_populates='character')
     logs = db.relationship('Log', back_populates='character')
     image = db.Column(db.String(80))
-
-    def __init__(*args):
-        if args.get('name', False):
-          self.name = args['name']  
-        if args.get('link', False):
-          self.link = args['link']
+    
     
     # get the whole image path
     @property
@@ -40,3 +35,7 @@ class Character(db.Model):
         """ Searches all log entries to find the earliest posted date """
         return None
 
+    def can_edit(self, user):
+        """ Test if the user is allowed to edit the character """
+        
+        return self.user_id == user.id

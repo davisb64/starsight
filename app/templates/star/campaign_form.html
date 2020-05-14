@@ -1,5 +1,7 @@
 {% extends "base.html" %} 
 
+{% from 'security/_macros.html' import render_field_with_errors %}
+
 {% block linkitem %}blankpage-link{% endblock %}
 {% block title %}Blank Page{% endblock %} 
 
@@ -8,11 +10,30 @@
 <div class="container-fluid">
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Blank Page</h1>
+    <h1 class="h3 mb-0 text-gray-800">{% if campaign %}Editing {{campaign.title}}{% else %}New Campaign{% endif %}</h1>
   </div>
 
   <!-- Content Row -->
   <div class="row">
+    <form action="{% if campaign %}{{ url_for('star.edit_campaign', campaign_id=campaign.id) }}{% else %}{{ url_for('star.new_campaign') }}{% endif %}" method="POST" enctype="multipart/form-data">
+      {{form.hidden_tag()}}
+      <div class="row">
+        <div class="col-6">
+          {{ render_field_with_errors(form.title, class="form-control", placeholder="Campaign Title") }}
+          {{ render_field_with_errors(form.subtitle, class="form-control", placeholder="Campaign Subtitle") }}
+          {{ render_field_with_errors(form.description, class="form-control", placeholder="Description") }}
+        </div>
+        <div class="col-6">
+          {% if campaign and campaign.image %} 
+            <img src="{{ campaign.imgsrc }}" style="width:150px;height:150px;border:1px solid lightslategray" class="img-profile rounded-circle"/>
+          {% endif %}
+          {{ render_field_with_errors(form.image)}}
+        </div>
+        <div class="col-12">
+          <button type="SUBMIT" class="btn btn-primary btn-lg w-100">Update Settings</button>
+        </div>
+      </div>
+    </form>
 	</div>
 </div>
 

@@ -125,25 +125,26 @@ def new_character():
         else:
             tag = form.tag.data
         '''
-        name = form.name.data
-        description = form.description.data
-        link = form.link.data
-        hp = form.hp.data
-        stre = form.str.data
-        inte = form.int.data
-        wis = form.wis.data
-        cons = form.cons.data
+       
         # slug = slugify(title)
-        character = Character(current_user, name, description, link, hp, stre, inte, wis, cons, image=filename)
+        character = Character()# #current_user, name, description, link, image=filename)
+        form.populate_obj(character)
+        character.user_id = current_user.id
+        character.image = filename
         db.session.add(character)
         db.session.commit()
-        return redirect(url_for('read', slug=slug))
+        flash("Character created!", "success")
+        return redirect(url_for('star.view_character', character_id=character.id))
     return render_template('star/character_form.html', form=form, action="new")
     
 @app.route('/character/edit/<int:character_id>', methods=('GET', 'POST'))
 # @roles_required('end_user')
+@login_required
 def edit_character(character_id):
     character = Character.query.filter_by(id=character_id).first_or_404()
+    if not character.can_edit(current_user):
+        flash("Cannot edit character >:(", "danger")
+        return redirect(url_for('main.index'))
     form = CharacterForm(obj=character)
     filename = None
     if form.validate_on_submit():
@@ -167,7 +168,7 @@ def edit_character(character_id):
             post.tag = new_tag
         '''
         db.session.commit()
-        return redirect(url_for('read', slug=character.slug))
+        return redirect(url_for('star.view_character', character_id=character.id))
     return render_template('star/character_form.html', form=form, character=character, action="edit")
 
 @app.route('/character/delete/<int:character_id>')
@@ -190,7 +191,7 @@ def view_campaign(campaign_id):
 
 @app.route('/campaign/new', methods=('GET', 'POST'))
 @login_required
-@roles_required('end_user')
+# @roles_required('end_user')
 def new_campaign():
     form = CampaignForm()
     if form.validate_on_submit():
@@ -210,18 +211,19 @@ def new_campaign():
         else:
             tag = form.tag.data
         '''
-        title = form.title.data
-        subtitle = form.subtitle.data
-        description = form.description.data
-        slug = slugify(title)
-        campaign = Campaign(current_user, title, subtitle, description, slug, session_count, image=filename)
+        
+        campaign = Campaign() # current_user, title, subtitle, description, slug, session_count, image=filename)
+        form.populate_obj(campaign)
+        campaign.user_id = current_user.id
+        campaign.image = filename
         db.session.add(campaign)
         db.session.commit()
-        return redirect(url_for('read', slug=slug))
+        flash("Campaign successfully created", "success")
+        return redirect(url_for('star.view_campaign', campaign_id=campaign.id))
     return render_template('star/campaign_form.html', form=form, action="new")
     
 @app.route('/campaign/edit/<int:campaign_id>', methods=('GET', 'POST'))
-@roles_required('admin')
+# @roles_required('admin')
 def edit_campaign(campaign_id):
     campaign = Campaign.query.filter_by(id=campaign_id).first_or_404()
     form = CampaignForm(obj=campaign)
@@ -247,7 +249,7 @@ def edit_campaign(campaign_id):
             post.tag = new_tag
         '''
         db.session.commit()
-        return redirect(url_for('read', slug=campaign.slug))
+        return redirect(url_for('star.view_campaign', campaign_id=campaign.id))
     return render_template('star/campaign_form.html', form=form, campaign=campaign, action="edit")
 
 @app.route('/campaign/delete/<int:campaign_id>')

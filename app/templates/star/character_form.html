@@ -10,18 +10,18 @@
 <div class="container-fluid">
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Editing {% if character %} {{character.name}} {% endif %}</h1>
+    <h1 class="h3 mb-0 text-gray-800">{% if character %}Editing {{character.name}}{% else %}New Character{% endif %}</h1>
   </div>
 
   <!-- Content Row -->
   <div class="row">
-    <form action="{{url_for('star.new_character')}}" method="POST" enctype="multipart/form-data">
+    <form action="{% if character %}{{ url_for('star.edit_character', character_id=character.id) }}{% else %}{{ url_for('star.new_character') }}{% endif %}" method="POST" enctype="multipart/form-data">
       {{form.hidden_tag()}}
       <div class="row">
         <div class="col-6">
           {{ render_field_with_errors(form.name, class="form-control", placeholder="Character Name") }}
-          {{ render_field_with_errors(form.description, class="form-control", placeholder="Last Name") }}
-          {{ render_field_with_errors(form.character_sheet, class="form-control", placeholder="Character Sheet Link") }}
+          {{ render_field_with_errors(form.description, class="form-control", placeholder="Description") }}
+          {{ render_field_with_errors(form.link, class="form-control", placeholder="Character Sheet Link") }}
         </div>
         <div class="col-6">
           {% if character and character.image %} 
