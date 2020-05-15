@@ -30,10 +30,6 @@
       {% endif %}
     </div>
     <div class="col-md-6">
-      {# USER TEXT DATA #}
-      {% from "star/_cards.html" import campaign_card %}
-      {{ campaign_card(campaign)}}
-      {# PHONE NUMBER#}
       <div class="card" style="border:1px,solid,lightslategray">
 				{# HEADER #}
 				<a href="#contactCard" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="contactCard">
@@ -61,15 +57,12 @@
 					</div>
 				</div>
       </div>
-      {% if user == user %}
-      
-      {% endif %}
     </div>
     <div class="col-3">
 
     </div>
     <div class="col-12 d-flex justify-content-sm-center">
-      <a href="{{ url_for('.settings') }}" class="btn btn-primary {#btn-icon-split#} btn-lg mt-3 ">
+      <a href="{{ url_for('main.settings') }}" class="btn btn-primary {#btn-icon-split#} btn-lg mt-3 ">
         <!-- <span class="icon text-white-50"> -->
           <!-- <i class="fas fa-edit"></i> -->
         <!-- </span> -->
