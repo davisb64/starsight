@@ -54,3 +54,8 @@ class Campaign(db.Model):
             if log.session_on not in results:
                 results.append(log.session_on)
         return results
+
+    def is_dm(self, requesting_user):
+        """ Returns true or false depending on if the user is the DM of the campaign """
+
+        return None

@@ -1,10 +1,13 @@
 # library imports
 from flask import render_template, redirect, flash, url_for, session, request, current_app, send_from_directory
 from flask_security import login_required, roles_required, current_user
+from flask_security.registerable import register_user
 from flask_uploads import UploadNotAllowed
 from flask_mail import Message
 from slugify import slugify
 import os
+import random
+import string
 # our objects
 from . import star as app
 from .. import db, uploaded_images, mail
@@ -253,24 +256,28 @@ def edit_campaign(campaign_id):
     return render_template('star/campaign_form.html', form=form, campaign=campaign, action="edit")
 
 @app.route('/campaign/add/<int:campaign_id>')
+@login_required
 def add_members(campaign_id):
+    campaign = Campaign.query.filter_by(id=campaign_id).first_or_404()
     form = AddMembersForm()
     if form.validate_on_submit():
         users = [x.strip() for x in form.user_list.data.split("\n")]
         for user in users:
             member = User.query.filter_by(user).first()
             if not member:
-                password = ''.join(random.SystemRandom().choice(String.ascii_uppercase + string.digits) for _ in range(20))
+                password = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
                 member = register_user(
-
+                    email=user,
+                    active=True,
+                    password=password
                 )
                 db.session.add(member)
                 db.session.commit()
             else:
                 flash("User added.", "success")
     else:
-        flask("Form error occurred.", "danger")
-    return render_template('star/campaign_add.html', form=form, campaign=campaign)
+        flash("Form error occurred.", "danger")
+    return render_template('star/campaign_add.html', form=form)
 
 @app.route('/campaign/delete/<int:campaign_id>')
 @roles_required('admin')
