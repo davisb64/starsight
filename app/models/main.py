@@ -55,7 +55,7 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='user', lazy='dynamic')
     characters = db.relationship('Character', backref='user')
     memberships = db.relationship('Membership', backref='user')
-    logs = db.relationship('Log', backref='user')
+    logs = db.relationship('Log', backref='user', lazy='dynamic')
 
     roles = db.relationship(
         'Role',
@@ -81,6 +81,9 @@ class User(db.Model, UserMixin):
     @property
     def when_registered(self):
         return humanize.naturaltime(self.confirmed_at)
+
+    def get_most_recent_log(self):
+        return self.logs.filter_by(active=True).order_by(Log.session_on.desc()).first()
 
 # Customized User model for SQL-Admin
 class UserAdmin(sqla.ModelView):
@@ -202,3 +205,4 @@ class Tag(db.Model):
 
     def __repr__(self):
         return self.name
+        
