@@ -6,6 +6,8 @@ from wtforms import validators, StringField, PasswordField
 from datetime import datetime
 import humanize
 
+from .log import Log
+
 # Create a table to support a many-to-many relationship between Users and Roles
 roles_users = db.Table(
     'roles_users',
