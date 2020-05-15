@@ -17,8 +17,7 @@ class Log(db.Model):
     active = db.Column(db.Boolean(), default=True)
     # TIME
     created_on = db.Column(db.DateTime(), default=datetime.utcnow)
-    sesssion_on = db.Column(db.DateTime(), default=datetime.utcnow)
-    sesssion = db.Column(db.DateTime(), default=datetime.utcnow) # NIU
+    session_on = db.Column(db.DateTime(), default=datetime.utcnow)
     published_on = db.Column(db.DateTime(), default=datetime.utcnow)    
     # PROPS
     title = db.Column(db.String(80))
