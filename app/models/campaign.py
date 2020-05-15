@@ -25,10 +25,13 @@ class Campaign(db.Model):
     memberships = db.relationship('Membership', backref='campaign')
     logs = db.relationship('Log', back_populates='campaign')
 
+     # get the whole image path
     @property
     def img(self):
-        """ Builds the path to the image stored in the static assets """
-        return None
+        if self.image:
+            return uploaded_images.url(f"campaigns/{self.id}/{self.image}")
+        else:
+            return None
 
     def can_create_new_session(self, membership):
         """ Checks if the given membership is able to generate new blank log entries for all active characters """
