@@ -158,7 +158,7 @@
                 {% endif %}
                 </span>
                 {% if current_user.is_authenticated and current_user.image %}
-                <img class="img-profile rounded-circle" src="{{current_user.imgsrc}}"/>
+                <img class="img-profile rounded-circle" src="{{ current_user.img }}"/>
                 {%else%}
                 <img class="img-profile rounded-circle" src="{{ url_for('static', filename='img/default_profile.jpg' ) }}"/>
                 {%endif%}

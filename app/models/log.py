@@ -32,10 +32,13 @@ class Log(db.Model):
     campaign = db.relationship('Campaign', back_populates='logs')
     membership = db.relationship('Membership', back_populates='logs')
 
+    # get the whole image path
     @property
     def img(self):
-        """ Builds the path to the image stored in the static assets """
-        return None
+        if self.image:
+            return uploaded_images.url(f"characters/{self.character_id}/logs/{self.image}")
+        else:
+            return None
 
     def can_view(self, membership):
         """ returns True if a player is allowed to view a log entry."""
