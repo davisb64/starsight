@@ -252,6 +252,26 @@ def edit_campaign(campaign_id):
         return redirect(url_for('star.view_campaign', campaign_id=campaign.id))
     return render_template('star/campaign_form.html', form=form, campaign=campaign, action="edit")
 
+@app.route('/campaign/add/<int:campaign_id>')
+def add_members(campaign_id):
+    form = AddMembersForm()
+    if form.validate_on_submit():
+        users = [x.strip() for x in form.user_list.data.split("\n")]
+        for user in users:
+            member = User.query.filter_by(user).first()
+            if not member:
+                password = ''.join(random.SystemRandom().choice(String.ascii_uppercase + string.digits) for _ in range(20))
+                member = register_user(
+
+                )
+                db.session.add(member)
+                db.session.commit()
+            else:
+                flash("User added.", "success")
+    else:
+        flask("Form error occurred.", "danger")
+    return render_template('star/campaign_add.html', form=form, campaign=campaign)
+
 @app.route('/campaign/delete/<int:campaign_id>')
 @roles_required('admin')
 def delete_campaign(campaign_id):
