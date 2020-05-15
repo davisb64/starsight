@@ -53,7 +53,7 @@ def settings():
         flash("User updated", "Success!")
     return render_template('main/settings.html', form=form)
 
-@app.route('/user<int:user_id>')
+@app.route('/user/<int:user_id>')
 @login_required
 def profile(user_id):
     campaign= Campaign.query.first()
