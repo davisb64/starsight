@@ -10,7 +10,7 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">
       {% if user.image %} 
-        <img src="{{ user.imgsrc }}" style="width:15%;height:width;border:1px solid gray" class="img-profile rounded-circle"/>
+        <img src="{{ user.img }}" style="width:15%;height:width;border:1px solid gray" class="img-profile rounded-circle"/>
       {% endif %}
       {{ user }}'s Profile
     </h1>
@@ -26,7 +26,7 @@
     <div class="col-3">
       {# PROFILE PICTURE #}
       {% if user.image %} 
-        <img src="{{ user.imgsrc }}" style="width:100%;height:width;border:1px solid gray" class="img-profile rounded-circle"/>
+        <img src="{{ user.img }}" style="width:100%;height:width;border:1px solid gray" class="img-profile rounded-circle"/>
       {% endif %}
     </div>
     <div class="col-md-6">
