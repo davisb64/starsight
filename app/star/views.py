@@ -139,8 +139,12 @@ def new_character():
     
 @app.route('/character/edit/<int:character_id>', methods=('GET', 'POST'))
 # @roles_required('end_user')
+@login_required
 def edit_character(character_id):
     character = Character.query.filter_by(id=character_id).first_or_404()
+    if not character.can_edit(current_user):
+        flash("Cannot edit character >:(", "danger")
+        return redirect(url_for('main.index'))
     form = CharacterForm(obj=character)
     filename = None
     if form.validate_on_submit():
@@ -207,13 +211,14 @@ def new_campaign():
         else:
             tag = form.tag.data
         '''
-        title = form.title.data
-        subtitle = form.subtitle.data
-        description = form.description.data
-        slug = slugify(title)
-        campaign = Campaign(current_user, title, subtitle, description, slug, session_count, image=filename)
+        
+        campaign = Campaign() # current_user, title, subtitle, description, slug, session_count, image=filename)
+        form.populate_obj(campaign)
+        campaign.user_id = current_user.id
+        campaign.image = filename
         db.session.add(campaign)
         db.session.commit()
+        flash("Campaign successfully created", "success")
         return redirect(url_for('star.view_campaign', campaign_id=campaign.id))
     return render_template('star/campaign_form.html', form=form, action="new")
     
@@ -247,6 +252,26 @@ def edit_campaign(campaign_id):
         return redirect(url_for('star.view_campaign', campaign_id=campaign.id))
     return render_template('star/campaign_form.html', form=form, campaign=campaign, action="edit")
 
+@app.route('/campaign/add/<int:campaign_id>')
+def add_members(campaign_id):
+    form = AddMembersForm()
+    if form.validate_on_submit():
+        users = [x.strip() for x in form.user_list.data.split("\n")]
+        for user in users:
+            member = User.query.filter_by(user).first()
+            if not member:
+                password = ''.join(random.SystemRandom().choice(String.ascii_uppercase + string.digits) for _ in range(20))
+                member = register_user(
+
+                )
+                db.session.add(member)
+                db.session.commit()
+            else:
+                flash("User added.", "success")
+    else:
+        flask("Form error occurred.", "danger")
+    return render_template('star/campaign_add.html', form=form, campaign=campaign)
+
 @app.route('/campaign/delete/<int:campaign_id>')
 @roles_required('admin')
 def delete_campaign(campaign_id):
@@ -264,4 +289,7 @@ def delete_campaign(campaign_id):
 @app.route('/dashboard/')
 @login_required
 def dashboard():
-    return render_template('star/dashboard.html')
+    data = {}
+    
+
+    return render_template('star/dashboard.html', data=data)
