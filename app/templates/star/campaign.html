@@ -10,7 +10,7 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">{{campaign.title}}</h1>
     {% if campaign.image %} 
-      <img src="{{ campaign.imgsrc }}" style="width:30px;height:30px;border:1px solid gray" class="img-profile rounded-circle"/>
+      <img src="{{ campaign.imgsrc }}" style="width:50px;height:50px;border:1px solid gray" class="img-profile rounded-circle"/>
     {% endif %}
   </div>
   <div>
@@ -20,17 +20,24 @@
   <!-- Content Row -->
   <div class="row">
     <div class="col-6">
-      
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">About {{campaign.title}}</h6>
+        </div>
+        <div class="card-body">
+          <h6>Played by: {{campaign.subtitle}}</h6><br>
+          {{campaign.description}}
+        </div>
+      </div>
     </div>
     <div class="col-6">
-        <div class="card shadow mb-4">
-          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">About {{campaign.title}}</h6>
-          </div>
-          <div class="card-body">
-            <h6>Played by: {{campaign.subtitle}}</h6><br>
-            {{campaign.description}}
-          </div>
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Participants</h6>
+        </div>
+        <div class="card-body">
+          
+        </div>
       </div>
     </div>
     <!-- <div class="col-6">
