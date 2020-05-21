@@ -185,6 +185,7 @@ def delete_post(post_id):
 #HELPER METHODS#
 ################
 
+
 def user_upload(user, file):
     """upload's a file to a user's folder"""
     path = f"{current_app.config['UPLOADED_IMAGES_DEST']}/{ current_user.id }"
@@ -192,6 +193,20 @@ def user_upload(user, file):
         os.mkdir(path)
     file.save(os.path.join(f"{current_app.config['UPLOADED_IMAGES_DEST']}/{ current_user.id }/", file.filename))
     return url_for('main.uploaded_files', user_id=user.id, filename=file.filename)
+
+def campaign_upload(campaign, file):
+    """upload's a file to a user's folder"""
+    path = f"{current_app.config['UPLOADED_IMAGES_DEST']}/campaigns/{ campaign.id }"
+    if not os.path.exists(path):
+        os.mkdir(path)
+    file.save(os.path.join(f"{current_app.config['UPLOADED_IMAGES_DEST']}/campaigns/{ campaign.id }/", file.filename))
+    return url_for('main.uploaded_campaign_files', campaign_id=campaign.id, filename=file.filename)
+
+@app.route('/files/campaigns/<int:campaign_id>/<path:filename>')
+def uploaded_campaign_files(campaign_id, filename):
+    """Function to serve up files"""
+    path = current_app.config['UPLOADED_IMAGES_DEST'] + f"\campaigns\{campaign_id}"
+    return send_from_directory(path, filename)
 
 @app.route('/files/<int:user_id>/<path:filename>')
 def uploaded_files(user_id, filename):

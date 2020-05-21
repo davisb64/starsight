@@ -15,8 +15,12 @@
     <div class="card-body">
     <a href="{{ url_for('star.view_character', character_id=character.id) }}" class="card-link">View</a>
     <a href="{{ url_for('star.edit_character', character_id=character.id) }}" class="card-link">Edit</a>
-    </div>
-</div>            
+    {% if character.link %}
+    <a href="{{ character.link }}" class="card-link" target="_blank" onclick="return confirm('Are you sure you want to visit this site?')">Sheet</a>
+    {% endif %}
+    <span class="badge badge-sm badge-warning badge-pill float-right"> {{ character.logs|length }} entries</span>
+</div>
+</div>
 
 {% endmacro %}
 
@@ -38,6 +42,8 @@
         <div class="card-body">
         <a href="{{ url_for('star.view_campaign', campaign_id=campaign.id) }}" class="card-link">View</a>
         <a href="{{ url_for('star.edit_campaign', campaign_id=campaign.id) }}" class="card-link">Edit</a>
+       <span class="badge badge-sm badge-warning badge-pill float-right"> {{ campaign.logs|length }} entries</span>
+    
         </div>
     </div>        
 

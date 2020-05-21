@@ -11,6 +11,7 @@ import string
 # our objects
 from . import star as app
 from .. import db, uploaded_images, mail
+from ..main.views import campaign_upload
 from ..models import Post, Tag, User, Character, Log, Membership, Campaign
 from ..main.forms import LogForm, CharacterForm, CampaignForm
 
@@ -237,11 +238,11 @@ def edit_campaign(campaign_id):
         if form.image.has_file():
             image = request.files.get('image')
             try:
-                filename = uploaded_images.save(image)
+                campaign_upload(campaign, image)
+                campaign.image= str(image.filename)
             except:
                 flash("The image was not uploaded")
-            if filename:
-                campaign.image = filename
+        
         else:
             campaign.image = original_image
         '''
